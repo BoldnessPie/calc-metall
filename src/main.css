@@ -1,15 +1,8 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-html,
-body {
-  height: 100%;
-}
+@import url("./assets/styles/index.css");
 
 .page {
   height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  background: var(--grey-1);
 }

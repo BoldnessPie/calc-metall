@@ -1,0 +1,86 @@
+.input {
+  display: inline-block;
+  max-width: 350px;
+}
+
+.input__state {
+  position: relative;
+}
+
+.input__legend {
+  display: inline-block;
+  margin-bottom: 5px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  color: var(--grey-3);
+}
+
+.input__control {
+  padding: 1rem 2.2rem 1rem 1rem;
+  box-sizing: border-box;
+  width: 100%;
+  height: 56px;
+
+  background: var(--white);
+  border: 1px solid var(--grey-2);
+  border-radius: var(--border-rad);
+  outline: none;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 26px;
+
+  color: var(--grey-4);
+}
+
+.input__field::placeholder {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 26px;
+
+  color: var(--grey-2);
+}
+
+.input__icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  display: none;
+  width: 24px;
+  height: 24px;
+}
+
+.input__control:focus {
+  border-color: var(--blue);
+}
+
+.input_success .input__icon_success {
+  display: block;
+  color: var(--success);
+}
+
+.input_success .input__control {
+  border-color: var(--blue);
+}
+
+.input_error .input__icon_error {
+  display: block;
+  color: var(--error);
+}
+.input_error .input__control {
+  border-color: var(--error);
+}

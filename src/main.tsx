@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./main.css";
 import App from "./App.tsx";
 
-createRoot(document.querySelector(".root")!).render(
+createRoot(document.querySelector(".page")!).render(
   <StrictMode>
     <App />
   </StrictMode>

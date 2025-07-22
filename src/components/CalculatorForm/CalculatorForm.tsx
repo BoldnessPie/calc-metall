@@ -52,6 +52,8 @@ function CalculatorForm({
                   legend={field.label}
                   anchor={field.name}
                   placeholder="Введите значение"
+                  value={formData[field.name] || ""}
+                  type="number"
                   onChange={(e) =>
                     handleInputChange(field.name, e.target.value)
                   }

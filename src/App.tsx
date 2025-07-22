@@ -1,8 +1,8 @@
 import Header from "./components/header/Header";
 import Main from "./components/main/Main";
 import Footer from "./components/footer/Footer";
-import Form from "./components/form/Form";
-import Navbar from "./components/navbar/Navbar";
+import CalculateForm from "./components/calculateForm/CalculateForm";
+import Tabs from "./components/tabs/Tabs";
 
 function App() {
   return (
@@ -10,8 +10,8 @@ function App() {
       <Header />
 
       <Main>
-        <Navbar />
-        <Form />
+        <Tabs />
+        <CalculateForm />
       </Main>
 
       <Footer />

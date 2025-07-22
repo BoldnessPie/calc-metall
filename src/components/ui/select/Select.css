@@ -1,0 +1,45 @@
+.select {
+  display: inline-block;
+  max-width: 350px;
+}
+
+.select__legend {
+  display: inline-block;
+  margin-bottom: 5px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  color: var(--grey-3);
+}
+
+.select__control {
+  padding: 1rem;
+  box-sizing: border-box;
+  width: 100%;
+  height: 56px;
+
+  background: var(--white);
+  border: 1px solid var(--grey-2);
+  border-radius: var(--border-rad);
+  outline: none;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 26px;
+
+  color: var(--grey-4);
+  cursor: pointer;
+}
+
+.select__control:focus {
+  border-color: var(--blue);
+}

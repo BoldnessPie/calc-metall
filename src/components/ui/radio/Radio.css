@@ -1,5 +1,7 @@
 .radio {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .radio__input {

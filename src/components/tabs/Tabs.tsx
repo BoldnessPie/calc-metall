@@ -1,30 +1,35 @@
 import "./Tabs.css";
 import Container from "../container/Container";
 
-function Tabs() {
+function Tabs({ onSelect }: { onSelect: (category: string) => void }) {
   return (
     <div className="tabs">
       <Container>
+        <h3 className="tabs__title">Выберите категорию для расчета</h3>
+
         <ul className="tabs__list">
           <li className="tabs__item">
-            <a className="tabs__link" href="#section1">
+            <button className="tabs__link" onClick={() => onSelect("carts")}>
               Тележки
-            </a>
+            </button>
           </li>
+
           <li className="tabs__item">
-            <a className="tabs__link" href="#section2">
+            <button className="tabs__link" onClick={() => onSelect("tables")}>
               Столы
-            </a>
+            </button>
           </li>
+
           <li className="tabs__item">
-            <a className="tabs__link" href="#section3">
+            <button className="tabs__link" onClick={() => onSelect("shelves")}>
               Стеллажи
-            </a>
+            </button>
           </li>
+
           <li className="tabs__item">
-            <a className="tabs__link" href="#section4">
+            <button className="tabs__link" onClick={() => onSelect("sinks")}>
               Мойки
-            </a>
+            </button>
           </li>
         </ul>
       </Container>

@@ -42,44 +42,41 @@ function CalculatorForm({
     const addToLength = 20;
     const addToHeight = 30;
 
-    const loadingSide = formData.loadingSide;
     const trayWidth = Number(formData.width) || 0;
     const trayLength = Number(formData.length) || 0;
-    const trayPipe = parseInt(formData.pipe) || 0; // Преобразуем значение трубы в число
+    const trayPipe = parseInt(formData.pipe) || 0;
     const trayLevels = Number(formData.levels);
     const trayDistance = Number(formData.distance) || 0;
     const wheelsType = formData.wheels;
     const wheelsDiameter = Number(formData.wheelsDiameter);
 
-    let wheelsHeight = wheelsDiameter > 80 && wheelsDiameter < 120 ? 130 : 0; // Высота колес по умолчанию
+    const wheelsHeight = wheelsDiameter > 80 && wheelsDiameter < 120 ? 130 : 0;
 
-    switch (loadingSide) {
+    const calculateDimensions = (isWidthLoading: boolean) => {
+      const width = isWidthLoading
+        ? trayWidth + addToWidth + 2 * trayPipe
+        : trayLength + addToWidth + 2 * trayPipe;
+      const length = isWidthLoading
+        ? trayLength + addToLength
+        : trayWidth + addToLength;
+      const height =
+        trayLevels * trayDistance + 2 * trayPipe + wheelsHeight + addToHeight;
+
+      const calculation = [
+        { name: `L - ${trayLevels * trayDistance + addToHeight} 4шт` },
+        { name: `L - ${width} 4шт` },
+        { name: `L - ${length} 4шт` },
+        { name: `${wheelsType} D - ${wheelsDiameter} 4шт` },
+      ];
+
+      return { width, length, height, calculation };
+    };
+
+    switch (formData.loadingSide) {
       case "По ширине":
-        return {
-          width: trayWidth + addToWidth + 2 * trayPipe,
-          length: trayLength + addToLength,
-          height:
-            trayLevels * trayDistance +
-            2 * trayPipe +
-            wheelsHeight +
-            addToHeight,
-          calculation: [
-            { name: `L - ${trayLevels * trayDistance + addToHeight} 4шт` },
-            { name: `L - ${trayWidth + addToWidth + 2 * trayPipe} 4шт` },
-            { name: `L - ${trayLength + addToLength} 4шт` },
-            { name: `${wheelsType} D - ${wheelsDiameter} 4шт` },
-          ],
-        };
+        return calculateDimensions(true);
       case "По длине":
-        return {
-          width: trayLength + addToWidth + 2 * trayPipe,
-          length: trayWidth + addToLength,
-          height:
-            trayLevels * trayDistance +
-            2 * trayPipe +
-            wheelsHeight +
-            addToHeight,
-        };
+        return calculateDimensions(false);
       default:
         return null;
     }

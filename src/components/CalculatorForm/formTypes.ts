@@ -14,14 +14,22 @@ export const formConfigs: Record<string, Field[]> = {
       name: "type",
       label: "Тип тележки",
       type: "select",
-      options: ["Под противень", "Под гастроемкость", "Под пиццу"],
+      options: [
+        "Под противень",
+        "Под гастроемкость",
+        "Под пиццу",
+        "Под поднос",
+      ],
     },
+
     {
       name: "loadingSide",
       label: "По какой стороне загрузка",
       type: "select",
       options: ["По ширине", "По длине"],
     },
+    { name: "width", label: "Ширина", type: "number" },
+    { name: "length", label: "Длина", type: "number" },
     {
       name: "pipe",
       label: "Размер трубы",

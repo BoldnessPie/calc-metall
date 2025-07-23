@@ -84,3 +84,17 @@
 .input_error .input__control {
   border-color: var(--error);
 }
+
+/* Скрыть управляющие значки для input[type="number"] */
+input[type="number"] {
+  -moz-appearance: textfield; /* Для Firefox */
+  -webkit-appearance: none; /* Для Chrome, Safari, Edge */
+  appearance: none; /* Для современных браузеров */
+}
+
+/* Убираем стрелки для input[type="number"] в Chrome */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

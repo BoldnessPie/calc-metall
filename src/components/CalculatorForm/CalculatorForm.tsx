@@ -5,6 +5,7 @@ import Button from "../ui/button/Button";
 import Input from "../ui/input/Input";
 import Radio from "../ui/radio/Radio";
 import Select from "../ui/select/Select";
+import Result from "../result/Result"; // Импортируем компонент Result
 
 function CalculatorForm({
   category,
@@ -13,26 +14,96 @@ function CalculatorForm({
   category: string;
   onBack: () => void;
 }) {
-  const fields = formConfigs[category];
-  const [formData, setFormData] = useState<Record<string, any>>({});
+  const fields = formConfigs[category]; // Получаем конфигурацию полей для выбранной категории
+  const [formData, setFormData] = useState<Record<string, any>>({}); // Состояние для хранения данных формы
+  const [isSubmitted, setIsSubmitted] = useState(false); // Флаг для отображения результата вместо формы
+  const [result, setResult] = useState<{
+    width: number;
+    length: number;
+    height: number;
+  } | null>(null); // Состояние для хранения результата расчета
 
   // Поля, которые лучше отобразить как radio кнопки (мало вариантов)
   const radioFields = ["loadingSide", "material"];
 
+  // Обработчик изменения значения в текстовых и числовых полях
   const handleInputChange = (name: string, value: any) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Обработчик изменения значения в radio кнопках
   const handleRadioChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Данные для расчета:", formData);
-    alert("Расчет выполнен! Смотри консоль.");
+  // Функция для выполнения расчета на основе введенных данных
+  const calculateResult = () => {
+    const addToWidth = 10;
+    const addToLength = 20;
+    const addToHeight = 30;
+
+    const loadingSide = formData.loadingSide;
+    const trayWidth = Number(formData.width) || 0;
+    const trayLength = Number(formData.length) || 0;
+    const trayPipe = parseInt(formData.pipe) || 0; // Преобразуем значение трубы в число
+    const trayLevels = Number(formData.levels);
+    const trayDistance = Number(formData.distance) || 0;
+    const wheelsType = formData.wheels;
+    const wheelsDiameter = Number(formData.wheelsDiameter);
+
+    let wheelsHeight = wheelsDiameter > 80 && wheelsDiameter < 120 ? 130 : 0; // Высота колес по умолчанию
+
+    switch (loadingSide) {
+      case "По ширине":
+        return {
+          width: trayWidth + addToWidth + 2 * trayPipe,
+          length: trayLength + addToLength,
+          height:
+            trayLevels * trayDistance +
+            2 * trayPipe +
+            wheelsHeight +
+            addToHeight,
+          calculation: [
+            { name: `L - ${trayLevels * trayDistance + addToHeight} 4шт` },
+            { name: `L - ${trayWidth + addToWidth + 2 * trayPipe} 4шт` },
+            { name: `L - ${trayLength + addToLength} 4шт` },
+            { name: `${wheelsType} D - ${wheelsDiameter} 4шт` },
+          ],
+        };
+      case "По длине":
+        return {
+          width: trayLength + addToWidth + 2 * trayPipe,
+          length: trayWidth + addToLength,
+          height:
+            trayLevels * trayDistance +
+            2 * trayPipe +
+            wheelsHeight +
+            addToHeight,
+        };
+      default:
+        return null;
+    }
   };
 
+  // Обработчик отправки формы
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault(); // Предотвращаем перезагрузку страницы
+    const calcResult = calculateResult(); // Выполняем расчет
+    setResult(calcResult); // Сохраняем результат в состояние
+    setIsSubmitted(true); // Переключаемся на отображение результата
+  };
+
+  // Если форма отправлена, отображаем результат
+  if (isSubmitted && result) {
+    return (
+      <Result
+        result={result}
+        onBack={() => setIsSubmitted(false)} // Возврат к форме
+      />
+    );
+  }
+
+  // Отображение формы для ввода данных
   return (
     <div className="form-wrapper">
       <form onSubmit={handleSubmit} className="calculator-form">
@@ -40,7 +111,7 @@ function CalculatorForm({
           <Button
             className="button_alternate"
             value="← Назад к выбору категории"
-            onClick={onBack}
+            onClick={onBack} // Возврат к выбору категории
           />
         </div>
 
@@ -52,10 +123,10 @@ function CalculatorForm({
                   legend={field.label}
                   anchor={field.name}
                   placeholder="Введите значение"
-                  value={formData[field.name] || ""}
+                  value={formData[field.name] || ""} // Значение из состояния
                   type="number"
-                  onChange={(e) =>
-                    handleInputChange(field.name, e.target.value)
+                  onChange={
+                    (e) => handleInputChange(field.name, e.target.value) // Обновление состояния
                   }
                 />
               )}
@@ -73,8 +144,10 @@ function CalculatorForm({
                           key={option}
                           name={field.name}
                           legend={option}
-                          defaultChecked={formData[field.name] === option}
-                          onChange={() => handleRadioChange(field.name, option)}
+                          defaultChecked={formData[field.name] === option} // Проверка выбранного значения
+                          onChange={
+                            () => handleRadioChange(field.name, option) // Обновление состояния
+                          }
                         />
                       ))}
                     </div>
@@ -88,9 +161,9 @@ function CalculatorForm({
                     legend={field.label}
                     anchor={field.name}
                     options={field.options}
-                    value={formData[field.name]}
-                    onChange={(e) =>
-                      handleInputChange(field.name, e.target.value)
+                    value={formData[field.name]} // Значение из состояния
+                    onChange={
+                      (e) => handleInputChange(field.name, e.target.value) // Обновление состояния
                     }
                   />
                 )}

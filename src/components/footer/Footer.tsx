@@ -6,7 +6,9 @@ function Footer() {
   return (
     <footer className="footer">
       <Container>
-        <p>© 2023 Your Company</p>
+        <div className="footer__wrap">
+          <h4 className="footer__title">© 2025 OlegTitoff Company</h4>
+        </div>
       </Container>
     </footer>
   );

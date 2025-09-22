@@ -5,7 +5,7 @@ import Button from "../ui/button/Button";
 import Input from "../ui/input/Input";
 import Radio from "../ui/radio/Radio";
 import Select from "../ui/select/Select";
-import Result from "../result/Result"; // Импортируем компонент Result
+import Result from "../result/Result";
 
 function CalculatorForm({
   category,
@@ -63,13 +63,14 @@ function CalculatorForm({
         trayLevels * trayDistance + 2 * trayPipe + wheelsHeight + addToHeight;
 
       const calculation = [
-        { name: `L - ${trayLevels * trayDistance + addToHeight} 4шт` },
-        { name: `L - ${width} 4шт` },
-        { name: `L - ${length} 4шт` },
-        { name: `${wheelsType} D - ${wheelsDiameter} 4шт` },
+        { name: `L - ${trayLevels * trayDistance + addToHeight}мм 4шт` },
+        { name: `L - ${width}мм 4шт` },
+        { name: `L - ${length}мм 4шт` },
+        { name: `${wheelsType} D - ${wheelsDiameter}мм 4шт` },
+        { name: `Длина направляющих: ${trayLength + 10}мм` },
       ];
 
-      return { width, length, height, calculation };
+      return { width, length, height, trayDistance, calculation };
     };
 
     switch (formData.loadingSide) {

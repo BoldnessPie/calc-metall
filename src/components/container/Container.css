@@ -4,3 +4,15 @@
   margin: 0 auto;
   box-sizing: border-box;
 }
+
+@media (max-width: 1200px) {
+  .container {
+    padding: 0 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}

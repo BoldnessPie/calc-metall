@@ -1,23 +1,26 @@
 .tabs {
-  padding: 1.5rem 0;
-  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .tabs__title {
-  margin-bottom: 2rem;
+  margin: 0;
   font-size: 1.5rem;
   color: var(--grey-4);
   text-align: center;
 }
 
 .tabs__list {
+  width: 100%;
   margin: 0;
   padding: 0;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
 
   list-style: none;
 }
@@ -25,12 +28,16 @@
 .tabs__link {
   position: relative;
 
+  width: 100%;
+  height: 100%;
+
   display: block;
-  padding: 0.75rem 1rem;
+  padding: 1rem 2rem;
 
   text-decoration: none;
   color: var(--grey-4);
   font-weight: bold;
+
   background: none;
   border: none;
   cursor: pointer;
@@ -67,6 +74,6 @@
 
 @media screen and (max-width: 768px) {
   .tabs__list {
-    flex-direction: column;
+    grid-auto-flow: row;
   }
 }

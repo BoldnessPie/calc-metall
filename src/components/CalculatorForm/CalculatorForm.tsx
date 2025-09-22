@@ -1,34 +1,34 @@
 import "./CalculatorForm.css";
 import { useState } from "react";
 import { formConfigs } from "./formTypes";
+import type { CalculatorFormProps, CalcResult } from "./types";
+import { useFormValidation } from "../../hooks/useFormValidation";
+import { calculateResult as calcResultUtil } from "../../utils/calculateResult";
 import Button from "../ui/button/Button";
 import Input from "../ui/input/Input";
 import Radio from "../ui/radio/Radio";
 import Select from "../ui/select/Select";
 import Result from "../result/Result";
 
-function CalculatorForm({
-  category,
-  onBack,
-}: {
-  category: string;
-  onBack: () => void;
-}) {
-  const fields = formConfigs[category]; // Получаем конфигурацию полей для выбранной категории
-  const [formData, setFormData] = useState<Record<string, any>>({}); // Состояние для хранения данных формы
-  const [isSubmitted, setIsSubmitted] = useState(false); // Флаг для отображения результата вместо формы
-  const [result, setResult] = useState<{
-    width: number;
-    length: number;
-    height: number;
-  } | null>(null); // Состояние для хранения результата расчета
+function CalculatorForm({ category, onBack }: CalculatorFormProps) {
+  const fields = formConfigs[category] ?? [];
+  const [formData, setFormData] = useState<Record<string, string | number>>({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [result, setResult] = useState<CalcResult | null>(null);
+  const { errors, validateField, hasErrors } = useFormValidation(fields);
+
 
   // Поля, которые лучше отобразить как radio кнопки (мало вариантов)
   const radioFields = ["loadingSide", "material"];
 
   // Обработчик изменения значения в текстовых и числовых полях
-  const handleInputChange = (name: string, value: any) => {
+  const handleInputChange = (name: string, value: string | number) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Обработчик потери фокуса для валидации
+  const handleBlur = (name: string) => {
+    validateField(name, formData[name]);
   };
 
   // Обработчик изменения значения в radio кнопках
@@ -38,54 +38,18 @@ function CalculatorForm({
 
   // Функция для выполнения расчета на основе введенных данных
   const calculateResult = () => {
-    const addToWidth = 10;
-    const addToLength = 20;
-    const addToHeight = 30;
-
-    const trayWidth = Number(formData.width) || 0;
-    const trayLength = Number(formData.length) || 0;
-    const trayPipe = parseInt(formData.pipe) || 0;
-    const trayLevels = Number(formData.levels);
-    const trayDistance = Number(formData.distance) || 0;
-    const wheelsType = formData.wheels;
-    const wheelsDiameter = Number(formData.wheelsDiameter);
-
-    const wheelsHeight = wheelsDiameter > 80 && wheelsDiameter < 120 ? 130 : 0;
-
-    const calculateDimensions = (isWidthLoading: boolean) => {
-      const width = isWidthLoading
-        ? trayWidth + addToWidth + 2 * trayPipe
-        : trayLength + addToWidth + 2 * trayPipe;
-      const length = isWidthLoading
-        ? trayLength + addToLength
-        : trayWidth + addToLength;
-      const height =
-        trayLevels * trayDistance + 2 * trayPipe + wheelsHeight + addToHeight;
-
-      const calculation = [
-        { name: `L - ${trayLevels * trayDistance + addToHeight}мм 4шт` },
-        { name: `L - ${width}мм 4шт` },
-        { name: `L - ${length}мм 4шт` },
-        { name: `${wheelsType} D - ${wheelsDiameter}мм 4шт` },
-        { name: `Длина направляющих: ${trayLength + 10}мм` },
-      ];
-
-      return { width, length, height, trayDistance, calculation };
-    };
-
-    switch (formData.loadingSide) {
-      case "По ширине":
-        return calculateDimensions(true);
-      case "По длине":
-        return calculateDimensions(false);
-      default:
-        return null;
-    }
+    return calcResultUtil(formData);
   };
 
   // Обработчик отправки формы
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // Предотвращаем перезагрузку страницы
+
+    if (hasErrors()) {
+      alert("Исправьте ошибки в форме перед отправкой.");
+      return;
+    }
+
     const calcResult = calculateResult(); // Выполняем расчет
     setResult(calcResult); // Сохраняем результат в состояние
     setIsSubmitted(true); // Переключаемся на отображение результата
@@ -118,14 +82,16 @@ function CalculatorForm({
             <div key={field.name} className="form-field">
               {field.type === "number" && (
                 <Input
-                  legend={field.label}
+                   legend={field.label}
                   anchor={field.name}
                   placeholder="Введите значение"
-                  value={formData[field.name] || ""} // Значение из состояния
+                  value={String(formData[field.name]) || ""}
                   type="number"
-                  onChange={
-                    (e) => handleInputChange(field.name, e.target.value) // Обновление состояния
-                  }
+                  min={field.min ?? undefined} // Передача min
+                  max={field.max ?? undefined} // Передача max
+                  isError={!!errors[field.name]} // Передача флага ошибки для класса input_error
+                  onChange={(e) => handleInputChange(field.name, e.target.value)}
+                  onBlur={() => handleBlur(field.name)}
                 />
               )}
 
@@ -159,7 +125,7 @@ function CalculatorForm({
                     legend={field.label}
                     anchor={field.name}
                     options={field.options}
-                    value={formData[field.name]} // Значение из состояния
+                    value={String(formData[field.name]) || ""} // Значение из состояния
                     onChange={
                       (e) => handleInputChange(field.name, e.target.value) // Обновление состояния
                     }

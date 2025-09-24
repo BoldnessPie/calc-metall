@@ -1,9 +1,10 @@
 import "./CalculatorForm.css";
 import { useState } from "react";
 import { formConfigs } from "./formTypes";
-import type { CalculatorFormProps, CalcResult } from "./types";
+import type { CalculatorFormProps, CalcResult } from "../../types/types";
 import { useFormValidation } from "../../hooks/useFormValidation";
 import { calculateResult as calcResultUtil } from "../../utils/calculateResult";
+
 import Button from "../ui/button/Button";
 import Input from "../ui/input/Input";
 import Radio from "../ui/radio/Radio";
@@ -16,7 +17,6 @@ function CalculatorForm({ category, onBack }: CalculatorFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [result, setResult] = useState<CalcResult | null>(null);
   const { errors, validateField, hasErrors } = useFormValidation(fields);
-
 
   // Поля, которые лучше отобразить как radio кнопки (мало вариантов)
   const radioFields = ["loadingSide", "material"];
@@ -82,7 +82,7 @@ function CalculatorForm({ category, onBack }: CalculatorFormProps) {
             <div key={field.name} className="form-field">
               {field.type === "number" && (
                 <Input
-                   legend={field.label}
+                  legend={field.label}
                   anchor={field.name}
                   placeholder="Введите значение"
                   value={String(formData[field.name]) || ""}
@@ -90,7 +90,9 @@ function CalculatorForm({ category, onBack }: CalculatorFormProps) {
                   min={field.min ?? undefined} // Передача min
                   max={field.max ?? undefined} // Передача max
                   isError={!!errors[field.name]} // Передача флага ошибки для класса input_error
-                  onChange={(e) => handleInputChange(field.name, e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(field.name, e.target.value)
+                  }
                   onBlur={() => handleBlur(field.name)}
                 />
               )}

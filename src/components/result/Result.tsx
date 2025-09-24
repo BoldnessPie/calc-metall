@@ -1,28 +1,18 @@
 import Button from "../ui/button/Button";
-
-interface CalculationItem {
-  name: string;
-}
-
-interface ResultProps {
-  result: {
-    width: number;
-    length: number;
-    height: number;
-    trayDistance: number;
-    calculation?: CalculationItem[];
-  };
-  onBack: () => void;
-}
+import Tray from "../Tray/Tray";
+import type { ResultProps } from "../../types/types";
 
 function Result({ result, onBack }: ResultProps) {
   return (
     <div className="result-wrapper">
       <h2>Результаты расчета</h2>
-      <p>Ширина: {result.width}мм</p>
-      <p>Длина: {result.length}мм</p>
-      <p>Высота: {result.height}мм</p>
-      <p>Расстояние между уровнями: {result.trayDistance}мм</p>
+      <p>Ширина: {result.size.width}мм</p>
+      <p>Длина: {result.size.length}мм</p>
+      <p>Высота: {result.size.height}мм</p>
+      <p>Расстояние между уровнями: {result.trolleyParams.stepLength}мм</p>
+
+      {/* Добавляем компонент чертежа тележки */}
+      <Tray result={result} />
 
       {result.calculation && (
         <div className="calculation-details">

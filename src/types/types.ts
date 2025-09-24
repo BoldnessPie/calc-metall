@@ -5,14 +5,29 @@ export type FormData = Record<string, string | number>;
 export type Errors = Record<string, string>;
 
 export interface CalcResult {
-  width: number;
-  length: number;
-  height: number;
-  trayDistance: number;
+  trolleyParams: {
+    trayWidth: number;
+    trayLength: number;
+    pipe: number;
+    levels: number;
+    stepLength: number;
+    wheelsHeight: number;
+    rails: number[];
+  };
+  size: {
+    width: number;
+    length: number;
+    height: number;
+  };
   calculation: Array<{ name: string }>;
 }
 
 export interface CalculatorFormProps {
   category: string;
+  onBack: () => void;
+}
+
+export interface ResultProps {
+  result: CalcResult;
   onBack: () => void;
 }

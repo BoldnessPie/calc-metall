@@ -1,45 +1,92 @@
-import type { CalcResult } from '../components/CalculatorForm/types';
+import type { CalcResult } from "../types/types";
 
-export const calculateResult = (formData: Record<string, string | number>): CalcResult | null => {
+export const calculateResult = (
+  formData: Record<string, string | number>
+): CalcResult | null => {
   const addToWidth = 10;
   const addToLength = 20;
   const addToHeight = 30;
 
   const trayWidth = Number(formData.width);
   const trayLength = Number(formData.length);
-  const trayPipe = parseInt(String(formData.pipe));
-  const trayLevels = Number(formData.levels);
-  const trayDistance = Number(formData.distance);
-  const wheelsType = formData.wheels;
+  const type = String(formData.type);
+  const pipe = parseInt(String(formData.pipe));
+  const levels = Number(formData.levels);
+  const stepLength = Number(formData.distance);
+  const wheelsType = String(formData.wheels);
   const wheelsDiameter = Number(formData.wheelsDiameter);
 
-  const wheelsHeight = wheelsDiameter > 80 && wheelsDiameter < 120 ? 130 : 0;
+  let wheelsHeight: number;
+  switch (wheelsDiameter) {
+    case 75:
+      wheelsHeight = 100;
+      break;
+    case 80:
+      wheelsHeight = 110;
+      break;
+    case 100:
+      wheelsHeight = 130;
+      break;
+    case 125:
+      wheelsHeight = 150;
+      break;
+    case 160:
+      wheelsHeight = 190;
+      break;
+  }
+
+  let rails: number[] = [];
+  switch (type) {
+    case "Под противень":
+      rails = [trayLength + 10, 30];
+      break;
+    case "Под гастроемкость":
+      rails = [trayLength + 10, 15];
+      break;
+    case "Под пиццу":
+      rails = [trayLength + 10, 80];
+      break;
+    case "Под поднос":
+      rails = [trayLength + 10, 60];
+      break;
+  }
 
   const calculateDimensions = (isWidthLoading: boolean): CalcResult => {
     const width = isWidthLoading
-      ? trayWidth + addToWidth + 2 * trayPipe
-      : trayLength + addToWidth + 2 * trayPipe;
+      ? trayWidth + addToWidth + 2 * pipe
+      : trayLength + addToWidth + 2 * pipe;
     const length = isWidthLoading
       ? trayLength + addToLength
       : trayWidth + addToLength;
-    const height =
-      trayLevels * trayDistance + 2 * trayPipe + wheelsHeight + addToHeight;
+    const height = levels * stepLength + 2 * pipe + wheelsHeight + addToHeight;
 
     const calculation = [
-      { name: `L - ${trayLevels * trayDistance + addToHeight}мм 4шт` },
+      { name: `L - ${levels * stepLength + addToHeight}мм 4шт` },
       { name: `L - ${width}мм 4шт` },
       { name: `L - ${length}мм 4шт` },
       { name: `${wheelsType} D - ${wheelsDiameter}мм 4шт` },
       { name: `Длина направляющих: ${trayLength + 10}мм` },
     ];
 
-    return { width, length, height, trayDistance, calculation };
+    return {
+      trolleyParams: {
+        trayWidth,
+        trayLength,
+        pipe,
+        levels,
+        stepLength,
+        wheelsHeight,
+        rails,
+      },
+      size: { width, length, height },
+      calculation,
+    };
   };
 
   switch (formData.loadingSide) {
-    case 'По ширине':
+    case "По ширине":
       return calculateDimensions(true);
-    case 'По длине':
+    case "По длине":
       return calculateDimensions(false);
     default:
       return null;

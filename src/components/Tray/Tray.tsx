@@ -18,15 +18,38 @@ function Tray({ result }: TrayProps) {
   } = trolleyParams;
 
   // Параметры для масштабирования чертежей
-  const scale = 0.3; // Масштаб для отображения
-  const margin = 50; // Отступы
+  const margin = 40; // Отступы внутри SVG
   const railThickness = 1.2; // Толщина направляющих в мм (константа)
 
-  // Размеры чертежей
-  const frontViewWidth = size.width * scale + margin * 2;
-  const frontViewHeight = size.height * scale + margin * 2;
-  const sideViewWidth = size.length * scale + margin * 2;
-  const sideViewHeight = size.height * scale + margin * 2;
+  // Адаптивные размеры контейнеров
+  const getContainerSize = () => {
+    if (typeof window !== "undefined") {
+      if (window.innerWidth <= 480) {
+        return { width: 300, height: 240 };
+      } else if (window.innerWidth <= 768) {
+        return { width: 350, height: 280 };
+      }
+    }
+    return { width: 400, height: 350 };
+  };
+
+  const containerSize = getContainerSize();
+  const containerWidth = containerSize.width;
+  const containerHeight = containerSize.height;
+
+  // Вычисляем оптимальный масштаб для каждого вида
+  const calculateScale = (actualWidth: number, actualHeight: number) => {
+    const availableWidth = containerWidth - margin * 2;
+    const availableHeight = containerHeight - margin * 2 - 40; // 40px для заголовка и размерных линий
+
+    const scaleByWidth = availableWidth / actualWidth;
+    const scaleByHeight = availableHeight / actualHeight;
+
+    return Math.min(scaleByWidth, scaleByHeight, 0.4); // Максимальный масштаб 0.4
+  };
+
+  const frontViewScale = calculateScale(size.width, size.height);
+  const sideViewScale = calculateScale(size.length, size.height);
 
   // Функция для отрисовки размерной линии
   const renderDimensionLine = (
@@ -93,33 +116,10 @@ function Tray({ result }: TrayProps) {
             />
           </>
         )}
-        {/* Стрелки */}
-        {isVertical ? (
-          <>
-            <polygon
-              points={`${x1 - 3},${y1 + 5} ${x1 + 3},${y1 + 5} ${x1},${y1}`}
-              fill="#666"
-            />
-            <polygon
-              points={`${x2 - 3},${y2 - 5} ${x2 + 3},${y2 - 5} ${x2},${y2}`}
-              fill="#666"
-            />
-          </>
-        ) : (
-          <>
-            <polygon
-              points={`${x1 - 5},${y1 - 3} ${x1 - 5},${y1 + 3} ${x1},${y1}`}
-              fill="#666"
-            />
-            <polygon
-              points={`${x2 + 5},${y2 - 3} ${x2 + 5},${y2 + 3} ${x2},${y2}`}
-              fill="#666"
-            />
-          </>
-        )}
+
         <text
           x={textX}
-          y={textY}
+          y={isVertical ? textY + 10 : textY - 10}
           textAnchor="middle"
           fontSize="12"
           fill="#333"
@@ -133,16 +133,17 @@ function Tray({ result }: TrayProps) {
 
   // Отрисовка вида спереди
   const renderFrontView = () => {
+    const scale = frontViewScale;
     const cartWidth = size.width * scale;
     const cartHeight = (size.height - wheelsHeight) * scale;
     const wheelHeight = wheelsHeight * scale;
     const pipeThickness = pipe * scale;
 
-    const startX = margin;
+    const startX = (containerWidth - cartWidth) / 2; // Центрируем по горизонтали
     const startY = margin + wheelHeight;
 
     return (
-      <svg width={frontViewWidth} height={frontViewHeight} className="drawing">
+      <svg width={containerWidth} height={containerHeight} className="drawing">
         {/* Основная рама тележки - внешний контур */}
         <rect
           x={startX}
@@ -239,7 +240,7 @@ function Tray({ result }: TrayProps) {
         {/* Колеса под тележкой */}
         <g>
           <circle
-            cx={startX + 30}
+            cx={startX + Math.max(30 * scale, cartWidth * 0.15)}
             cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
             r={wheelHeight / 3}
             fill="#ccc"
@@ -247,7 +248,7 @@ function Tray({ result }: TrayProps) {
             strokeWidth="2"
           />
           <circle
-            cx={startX + 30}
+            cx={startX + Math.max(30 * scale, cartWidth * 0.15)}
             cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
             r={wheelHeight / 6}
             fill="#666"
@@ -255,7 +256,7 @@ function Tray({ result }: TrayProps) {
             strokeWidth="1"
           />
           <circle
-            cx={startX + cartWidth - 30}
+            cx={startX + cartWidth - Math.max(30 * scale, cartWidth * 0.15)}
             cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
             r={wheelHeight / 3}
             fill="#ccc"
@@ -263,7 +264,7 @@ function Tray({ result }: TrayProps) {
             strokeWidth="2"
           />
           <circle
-            cx={startX + cartWidth - 30}
+            cx={startX + cartWidth - Math.max(30 * scale, cartWidth * 0.15)}
             cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
             r={wheelHeight / 6}
             fill="#666"
@@ -276,9 +277,11 @@ function Tray({ result }: TrayProps) {
         <g>
           {/* Левая опора */}
           <polygon
-            points={`${startX + 30},${
+            points={`${startX + Math.max(30 * scale, cartWidth * 0.15)},${
               startY + cartHeight + wheelHeight / 2 + wheelHeight / 3
-            } ${startX + 15},${startY + cartHeight} ${startX + 45},${
+            } ${startX + Math.max(15 * scale, cartWidth * 0.07)},${
+              startY + cartHeight
+            } ${startX + Math.max(45 * scale, cartWidth * 0.23)},${
               startY + cartHeight
             }`}
             fill="#bbb"
@@ -287,10 +290,12 @@ function Tray({ result }: TrayProps) {
           />
           {/* Правая опора */}
           <polygon
-            points={`${startX + cartWidth - 30},${
-              startY + cartHeight + wheelHeight / 2 + wheelHeight / 3
-            } ${startX + cartWidth - 45},${startY + cartHeight} ${
-              startX + cartWidth - 15
+            points={`${
+              startX + cartWidth - Math.max(30 * scale, cartWidth * 0.15)
+            },${startY + cartHeight + wheelHeight / 2 + wheelHeight / 3} ${
+              startX + cartWidth - Math.max(45 * scale, cartWidth * 0.23)
+            },${startY + cartHeight} ${
+              startX + cartWidth - Math.max(15 * scale, cartWidth * 0.07)
             },${startY + cartHeight}`}
             fill="#bbb"
             stroke="#333"
@@ -324,7 +329,7 @@ function Tray({ result }: TrayProps) {
         )}
 
         <text
-          x={frontViewWidth / 2}
+          x={containerWidth / 2}
           y={35}
           textAnchor="middle"
           fontSize="14"
@@ -338,16 +343,17 @@ function Tray({ result }: TrayProps) {
 
   // Отрисовка вида сбоку
   const renderSideView = () => {
+    const scale = sideViewScale;
     const cartLength = size.length * scale;
     const cartHeight = (size.height - wheelsHeight) * scale;
     const wheelHeight = wheelsHeight * scale;
     const pipeThickness = pipe * scale;
 
-    const startX = margin;
+    const startX = (containerWidth - cartLength) / 2; // Центрируем по горизонтали
     const startY = margin + wheelHeight;
 
     return (
-      <svg width={sideViewWidth} height={sideViewHeight} className="drawing">
+      <svg width={containerWidth} height={containerHeight} className="drawing">
         {/* Основная рама тележки - внешний контур */}
         <rect
           x={startX}
@@ -442,7 +448,7 @@ function Tray({ result }: TrayProps) {
         {/* Колеса под тележкой */}
         <g>
           <circle
-            cx={startX + 40}
+            cx={startX + Math.max(40 * scale, cartLength * 0.15)}
             cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
             r={wheelHeight / 3}
             fill="#ccc"
@@ -450,7 +456,7 @@ function Tray({ result }: TrayProps) {
             strokeWidth="2"
           />
           <circle
-            cx={startX + 40}
+            cx={startX + Math.max(40 * scale, cartLength * 0.15)}
             cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
             r={wheelHeight / 6}
             fill="#666"
@@ -458,7 +464,7 @@ function Tray({ result }: TrayProps) {
             strokeWidth="1"
           />
           <circle
-            cx={startX + cartLength - 40}
+            cx={startX + cartLength - Math.max(40 * scale, cartLength * 0.15)}
             cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
             r={wheelHeight / 3}
             fill="#ccc"
@@ -466,7 +472,7 @@ function Tray({ result }: TrayProps) {
             strokeWidth="2"
           />
           <circle
-            cx={startX + cartLength - 40}
+            cx={startX + cartLength - Math.max(40 * scale, cartLength * 0.15)}
             cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
             r={wheelHeight / 6}
             fill="#666"
@@ -478,9 +484,11 @@ function Tray({ result }: TrayProps) {
         <g>
           {/* Передняя опора */}
           <polygon
-            points={`${startX + 40},${
+            points={`${startX + Math.max(40 * scale, cartLength * 0.15)},${
               startY + cartHeight + wheelHeight / 2 + wheelHeight / 3
-            } ${startX + 25},${startY + cartHeight} ${startX + 55},${
+            } ${startX + Math.max(25 * scale, cartLength * 0.1)},${
+              startY + cartHeight
+            } ${startX + Math.max(55 * scale, cartLength * 0.2)},${
               startY + cartHeight
             }`}
             fill="#bbb"
@@ -489,10 +497,12 @@ function Tray({ result }: TrayProps) {
           />
           {/* Задняя опора */}
           <polygon
-            points={`${startX + cartLength - 40},${
-              startY + cartHeight + wheelHeight / 2 + wheelHeight / 3
-            } ${startX + cartLength - 55},${startY + cartHeight} ${
-              startX + cartLength - 25
+            points={`${
+              startX + cartLength - Math.max(40 * scale, cartLength * 0.15)
+            },${startY + cartHeight + wheelHeight / 2 + wheelHeight / 3} ${
+              startX + cartLength - Math.max(55 * scale, cartLength * 0.2)
+            },${startY + cartHeight} ${
+              startX + cartLength - Math.max(25 * scale, cartLength * 0.1)
             },${startY + cartHeight}`}
             fill="#bbb"
             stroke="#333"
@@ -524,9 +534,9 @@ function Tray({ result }: TrayProps) {
             const level1Y = startY + cartHeight - stepLength * scale;
             const level2Y = startY + cartHeight - 2 * stepLength * scale;
             return renderDimensionLine(
-              cartLength + margin + 15,
+              startX - 20,
               level1Y,
-              cartLength + margin + 15,
+              startX - 20,
               level2Y,
               `${stepLength}мм`,
               0,
@@ -535,7 +545,7 @@ function Tray({ result }: TrayProps) {
           })()}
 
         <text
-          x={sideViewWidth / 2}
+          x={containerWidth / 2}
           y={35}
           textAnchor="middle"
           fontSize="14"
@@ -549,7 +559,7 @@ function Tray({ result }: TrayProps) {
 
   return (
     <div className="tray">
-      <h3>Чертеж тележки</h3>
+      <h3 className="tray__title">Чертеж тележки</h3>
       <div className="tray__drawings">
         <div className="tray__drawing">{renderFrontView()}</div>
         <div className="tray__drawing">{renderSideView()}</div>

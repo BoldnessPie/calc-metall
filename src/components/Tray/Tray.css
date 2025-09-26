@@ -4,9 +4,12 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-.tray h3 {
+.tray__title {
   margin: 0 0 20px 0;
   color: #333;
   font-size: 18px;
@@ -19,12 +22,16 @@
   justify-content: center;
   flex-wrap: wrap;
   margin-bottom: 30px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .tray__drawing {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 400px;
+  height: 350px;
 }
 
 .drawing {
@@ -32,6 +39,10 @@
   background-color: white;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .dimension-line text {
@@ -83,14 +94,45 @@
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
+  .tray {
+    margin: 10px 5px;
+    padding: 10px 5px;
+    box-sizing: border-box;
+  }
+
   .tray__drawings {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    width: 100%;
+    overflow-x: hidden;
   }
 
-  .drawing {
-    max-width: 100%;
-    height: auto;
+  .tray__drawing {
+    width: calc(100% - 10px);
+    max-width: 340px;
+    height: 270px;
+    box-sizing: border-box;
+  }
+
+  .dimension-line text {
+    font-size: 10px; /* Уменьшаем шрифт на мобильных */
+  }
+}
+
+@media (max-width: 480px) {
+  .tray {
+    margin: 5px 2px;
+    padding: 8px 5px;
+  }
+
+  .tray__drawing {
+    width: calc(100% - 10px);
+    max-width: 280px;
+    height: 220px;
+  }
+
+  .dimension-line text {
+    font-size: 9px;
   }
 }

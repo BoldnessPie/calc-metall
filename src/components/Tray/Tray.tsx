@@ -236,65 +236,27 @@ function Tray({ result }: TrayProps) {
           );
         })}
 
-        {/* Колеса под тележкой */}
+        {/* Колеса под тележкой (вид спереди - прямоугольники) */}
         <g>
-          <circle
-            cx={startX + 30}
-            cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
-            r={wheelHeight / 3}
+          {/* Левое колесо */}
+          <rect
+            x={startX + 15}
+            y={startY + cartHeight}
+            width={15}
+            height={wheelHeight}
             fill="#ccc"
             stroke="#333"
             strokeWidth="2"
           />
-          <circle
-            cx={startX + 30}
-            cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
-            r={wheelHeight / 6}
-            fill="#666"
-            stroke="#333"
-            strokeWidth="1"
-          />
-          <circle
-            cx={startX + cartWidth - 30}
-            cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
-            r={wheelHeight / 3}
+          {/* Правое колесо */}
+          <rect
+            x={startX + cartWidth - 30}
+            y={startY + cartHeight}
+            width={15}
+            height={wheelHeight}
             fill="#ccc"
             stroke="#333"
             strokeWidth="2"
-          />
-          <circle
-            cx={startX + cartWidth - 30}
-            cy={startY + cartHeight + wheelHeight / 2 + wheelHeight / 3}
-            r={wheelHeight / 6}
-            fill="#666"
-            stroke="#333"
-            strokeWidth="1"
-          />
-        </g>
-
-        {/* Треугольные колесные опоры */}
-        <g>
-          {/* Левая опора */}
-          <polygon
-            points={`${startX + 30},${
-              startY + cartHeight + wheelHeight / 2 + wheelHeight / 3
-            } ${startX + 15},${startY + cartHeight} ${startX + 45},${
-              startY + cartHeight
-            }`}
-            fill="#bbb"
-            stroke="#333"
-            strokeWidth="1"
-          />
-          {/* Правая опора */}
-          <polygon
-            points={`${startX + cartWidth - 30},${
-              startY + cartHeight + wheelHeight / 2 + wheelHeight / 3
-            } ${startX + cartWidth - 45},${startY + cartHeight} ${
-              startX + cartWidth - 15
-            },${startY + cartHeight}`}
-            fill="#bbb"
-            stroke="#333"
-            strokeWidth="1"
           />
         </g>
 
@@ -570,7 +532,7 @@ function Tray({ result }: TrayProps) {
           <li>
             Размкер трубы: {pipe}×{pipe}мм
           </li>
-          <li>Диаметр колес: {wheelsHeight}мм</li>
+          <li>Диаметр колес: D - {result.calculation.wheelsDiameter}мм</li>
         </ul>
       </div>
     </div>

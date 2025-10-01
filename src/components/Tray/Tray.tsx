@@ -119,7 +119,7 @@ function Tray({ result }: TrayProps) {
         )}
         <text
           x={textX}
-          y={textY}
+          y={isVertical ? textY + 10 : textY - 10}
           textAnchor="middle"
           fontSize="12"
           fill="#333"
@@ -524,9 +524,9 @@ function Tray({ result }: TrayProps) {
             const level1Y = startY + cartHeight - stepLength * scale;
             const level2Y = startY + cartHeight - 2 * stepLength * scale;
             return renderDimensionLine(
-              cartLength + margin + 15,
+              startX - 20,
               level1Y,
-              cartLength + margin + 15,
+              startX - 20,
               level2Y,
               `${stepLength}мм`,
               0,
@@ -559,14 +559,18 @@ function Tray({ result }: TrayProps) {
         <h4>Технические характеристики:</h4>
         <ul>
           <li>
-            Размер противня: {trayWidth}×{trayLength}мм
+            Габариты тележки: {result.size.width}x{result.size.length}x
+            {result.size.height}мм
           </li>
           <li>
-            Толщина трубы: {pipe}×{pipe}мм
+            Под противень: {trayWidth}×{trayLength}мм
           </li>
-          <li>Количество уровней: {levels}</li>
+          <li>Уровней: {levels}</li>
           <li>Расстояние между уровнями: {stepLength}мм</li>
-          <li>Высота колес: {wheelsHeight}мм</li>
+          <li>
+            Размкер трубы: {pipe}×{pipe}мм
+          </li>
+          <li>Диаметр колес: {wheelsHeight}мм</li>
         </ul>
       </div>
     </div>

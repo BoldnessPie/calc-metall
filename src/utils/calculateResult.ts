@@ -60,13 +60,13 @@ export const calculateResult = (
       : trayWidth + addToLength;
     const height = levels * stepLength + 2 * pipe + wheelsHeight + addToHeight;
 
-    const calculation = [
-      { name: `L - ${levels * stepLength + addToHeight}мм 4шт` },
-      { name: `L - ${width}мм 4шт` },
-      { name: `L - ${length}мм 4шт` },
-      { name: `${wheelsType} D - ${wheelsDiameter}мм 4шт` },
-      { name: `Длина направляющих: ${trayLength + 10}мм` },
-    ];
+    const calculation = {
+      pipeH: levels * stepLength + addToHeight,
+      pipeW: width,
+      pipeL: length,
+      wheelsType,
+      wheelsDiameter,
+    };
 
     return {
       trolleyParams: {

@@ -4,26 +4,23 @@ import type { ResultProps } from "../../types/types";
 
 function Result({ result, onBack }: ResultProps) {
   return (
-    <div className="result-wrapper">
-      <h2>Результаты расчета</h2>
-      <p>Ширина: {result.size.width}мм</p>
-      <p>Длина: {result.size.length}мм</p>
-      <p>Высота: {result.size.height}мм</p>
-      <p>Расстояние между уровнями: {result.trolleyParams.stepLength}мм</p>
+    <div className="result">
+      <h2 className="result__title">Результаты расчета</h2>
+      <div className="result__wrap">
+        <p>
+          Трубы: L- {result.calculation.pipeL}мм 4шт, L -
+          {result.calculation.pipeH}мм 4шт, L - {result.calculation.pipeW}мм
+          4шт, L - 180мм 4шт
+        </p>
+        <p>Направляющие: {result.trolleyParams.rails.join("x")}мм</p>
+        <p>
+          Колеса: {result.calculation.wheelsType}, D -
+          {result.calculation.wheelsDiameter}мм 4шт
+        </p>
+      </div>
 
       {/* Добавляем компонент чертежа тележки */}
       <Tray result={result} />
-
-      {result.calculation && (
-        <div className="calculation-details">
-          <h3>Развертка:</h3>
-          <ul>
-            {result.calculation.map((item, index) => (
-              <li key={index}>{item.name}</li>
-            ))}
-          </ul>
-        </div>
-      )}
 
       <Button
         className="button_alternate"

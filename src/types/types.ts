@@ -19,7 +19,13 @@ export interface CalcResult {
     length: number;
     height: number;
   };
-  calculation: Array<{ name: string }>;
+  calculation: {
+    pipeH: number;
+    pipeW: number;
+    pipeL: number;
+    wheelsType: string;
+    wheelsDiameter: number;
+  };
 }
 
 export interface CalculatorFormProps {

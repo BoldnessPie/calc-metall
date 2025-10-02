@@ -1,6 +1,6 @@
 // Общие типы для CalculatorForm и связанных компонентов
 
-export type FormData = Record<string, string | number>;
+export type FormData = Record<string, string | number | boolean>;
 
 export type Errors = Record<string, string>;
 

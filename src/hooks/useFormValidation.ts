@@ -5,8 +5,14 @@ import type { Field } from "../components/CalculatorForm/formTypes";
 export const useFormValidation = (fields: Field[]) => {
   const [errors, setErrors] = useState<Errors>({});
 
-  const validateField = (name: string, value: string | number) => {
+  const validateField = (name: string, value: string | number | boolean) => {
     const field = fields.find((f) => f.name === name);
+
+    // Не валидируем boolean поля
+    if (field?.type === "boolean") {
+      return;
+    }
+
     if (
       field?.type === "number" &&
       (field.min !== undefined || field.max !== undefined)

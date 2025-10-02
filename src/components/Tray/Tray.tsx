@@ -236,6 +236,30 @@ function Tray({ result }: TrayProps) {
           );
         })}
 
+        {/* Центральная перемычка */}
+        {(() => {
+          // Вычисляем средний уровень
+          const middleLevelIndex = Math.round(levels / 2);
+          const middleLevelY =
+            startY + cartHeight - middleLevelIndex * (stepLength * scale);
+          const bracingThickness = 8 * scale; // Толщина перемычки 8мм
+          const bracingOffset = 2 * scale; // Отступ 2мм от направляющей
+          const bracingY =
+            middleLevelY + (railThickness * scale) / 2 + bracingOffset;
+
+          return (
+            <rect
+              x={startX + pipeThickness}
+              y={bracingY}
+              width={cartWidth - 2 * pipeThickness}
+              height={bracingThickness}
+              fill="#bbb"
+              stroke="#555"
+              strokeWidth="1"
+            />
+          );
+        })()}
+
         {/* Колеса под тележкой (вид спереди - прямоугольники) */}
         <g>
           {/* Левое колесо */}
@@ -284,6 +308,53 @@ function Tray({ result }: TrayProps) {
           startY - 15,
           `${pipe}мм`
         )}
+
+        {/* Размерная стрелка для ширины направляющей */}
+        {(() => {
+          const bottomLevelY = startY + cartHeight - stepLength * scale;
+          const railWidth = rails[1] * scale;
+          const railStartX = startX + pipeThickness;
+          const railEndX = railStartX + railWidth;
+
+          // Координаты для стрелки, указывающей на конец направляющей
+          const arrowStartX = railEndX + 15;
+          const arrowStartY = bottomLevelY - 10;
+          const arrowEndX = railEndX + 5;
+          const arrowEndY = bottomLevelY - 2;
+
+          return (
+            <g className="rail-dimension">
+              {/* Линия-стрелка */}
+              <line
+                x1={arrowStartX}
+                y1={arrowStartY}
+                x2={arrowEndX}
+                y2={arrowEndY}
+                stroke="#666"
+                strokeWidth="1"
+              />
+
+              {/* Стрелка на конце */}
+              <polygon
+                points={`${arrowEndX - 3},${arrowEndY + 3} ${arrowEndX + 3},${
+                  arrowEndY + 3
+                } ${arrowEndX - 2},${arrowEndY - 2}`}
+                fill="#666"
+              />
+
+              {/* Текст с размером */}
+              <text
+                x={arrowStartX + 5}
+                y={arrowStartY}
+                textAnchor="start"
+                fontSize="12"
+                fill="#333"
+              >
+                Ширина {rails[1]}мм
+              </text>
+            </g>
+          );
+        })()}
 
         <text
           x={frontViewWidth / 2}
@@ -532,7 +603,8 @@ function Tray({ result }: TrayProps) {
           <li>
             Размкер трубы: {pipe}×{pipe}мм
           </li>
-          <li>Диаметр колес: D - {result.calculation.wheelsDiameter}мм</li>
+          <li>Тип колес: {result.calculation.wheelsType}</li>
+          <li>Диаметр колес: {result.calculation.wheelsDiameter}мм</li>
         </ul>
       </div>
     </div>

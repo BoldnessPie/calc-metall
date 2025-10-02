@@ -1,6 +1,4 @@
-
-
-export type FieldType = "number" | "select";
+export type FieldType = "number" | "select" | "boolean";
 
 export interface Field {
   name: string;
@@ -77,6 +75,18 @@ export const formConfigs: Record<string, Field[]> = {
       label: "Диаметр колес",
       type: "select",
       options: ["50", "75", "80", "100", "120", "125", "160"],
+    },
+    {
+      name: "rails",
+      label: "Нестандартные направляющие?",
+      type: "boolean",
+    },
+    {
+      name: "customRailsWidth",
+      label: "Ширина нестандартных направляющих (мм)",
+      type: "number",
+      min: 10,
+      max: 200,
     },
   ],
   tables: [

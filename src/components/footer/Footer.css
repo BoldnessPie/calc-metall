@@ -8,3 +8,9 @@
   font-size: 0.9rem;
   color: var(--grey-3);
 }
+
+@media print {
+  .footer {
+    display: none;
+  }
+}

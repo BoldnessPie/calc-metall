@@ -1,7 +1,7 @@
 import type { CalcResult } from "../types/types";
 
 export const calculateResult = (
-  formData: Record<string, string | number>
+  formData: Record<string, string | number | boolean>
 ): CalcResult | null => {
   const addToWidth = 10;
   const addToLength = 20;
@@ -18,6 +18,9 @@ export const calculateResult = (
 
   let wheelsHeight: number;
   switch (wheelsDiameter) {
+    case 50:
+      wheelsHeight = 70;
+      break;
     case 75:
       wheelsHeight = 100;
       break;
@@ -36,19 +39,27 @@ export const calculateResult = (
   }
 
   let rails: number[] = [];
-  switch (type) {
-    case "Под противень":
-      rails = [trayLength + 10, 30];
-      break;
-    case "Под гастроемкость":
-      rails = [trayLength + 10, 15];
-      break;
-    case "Под пиццу":
-      rails = [trayLength + 10, 80];
-      break;
-    case "Под поднос":
-      rails = [trayLength + 10, 60];
-      break;
+
+  // Проверяем, используются ли нестандартные направляющие
+  if (formData.rails && formData.customRailsWidth) {
+    // Используем нестандартную ширину
+    rails = [trayLength + 10, Number(formData.customRailsWidth)];
+  } else {
+    // Используем стандартные значения по типу
+    switch (type) {
+      case "Под противень":
+        rails = [trayLength + 10, 30];
+        break;
+      case "Под гастроемкость":
+        rails = [trayLength + 10, 15];
+        break;
+      case "Под пиццу":
+        rails = [trayLength + 10, 80];
+        break;
+      case "Под поднос":
+        rails = [trayLength + 10, 60];
+        break;
+    }
   }
 
   const calculateDimensions = (isWidthLoading: boolean): CalcResult => {

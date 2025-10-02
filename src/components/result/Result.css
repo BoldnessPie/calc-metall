@@ -1,0 +1,9 @@
+@media print {
+  .result__container {
+    display: none;
+  }
+
+  .result__btn {
+    display: none;
+  }
+}

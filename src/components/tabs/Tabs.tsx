@@ -5,31 +5,43 @@ function Tabs({ onSelect }: { onSelect: (category: string) => void }) {
     <div className="tabs">
       <h3 className="tabs__title">Выберите категорию для расчета</h3>
 
-      <ul className="tabs__list">
-        <li className="tabs__item">
-          <button className="tabs__link" onClick={() => onSelect("carts")}>
-            Тележки
-          </button>
-        </li>
+      <div className="tabs__grid">
+        <button className="tabs__card" onClick={() => onSelect("carts")}>
+          <img
+            src="src/assets/images/Telejka.png"
+            alt="Тележки"
+            className="tabs__image"
+          />
+          <span className="tabs__label">Тележки</span>
+        </button>
 
-        <li className="tabs__item">
-          <button className="tabs__link" onClick={() => onSelect("tables")}>
-            Столы
-          </button>
-        </li>
+        <button className="tabs__card" onClick={() => onSelect("tables")}>
+          <img
+            src="src/assets/images/Stol.png"
+            alt="Столы"
+            className="tabs__image"
+          />
+          <span className="tabs__label">Столы</span>
+        </button>
 
-        <li className="tabs__item">
-          <button className="tabs__link" onClick={() => onSelect("shelves")}>
-            Стеллажи
-          </button>
-        </li>
+        <button className="tabs__card" onClick={() => onSelect("shelves")}>
+          <img
+            src="src/assets/images/Stellaj.png"
+            alt="Стеллажи"
+            className="tabs__image"
+          />
+          <span className="tabs__label">Стеллажи</span>
+        </button>
 
-        <li className="tabs__item">
-          <button className="tabs__link" onClick={() => onSelect("sinks")}>
-            Мойки
-          </button>
-        </li>
-      </ul>
+        <button className="tabs__card" onClick={() => onSelect("sinks")}>
+          <img
+            src="src/assets/images/Moika.png"
+            alt="Мойки"
+            className="tabs__image"
+          />
+          <span className="tabs__label">Мойки</span>
+        </button>
+      </div>
     </div>
   );
 }

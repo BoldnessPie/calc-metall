@@ -6,7 +6,7 @@ function Header() {
     <header className="header">
       <Container>
         <div className="header__wrap">
-          <h1 className="header__title">Калькулятор</h1>
+          <h1 className="header__title">OlegTitoff</h1>
           <p className="header__description">
             Расчет металла для производства и построение модели
           </p>

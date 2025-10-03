@@ -24,9 +24,9 @@ function Tray({ result }: TrayProps) {
 
   // Размеры чертежей
   const frontViewWidth = size.width * scale + margin * 2;
-  const frontViewHeight = size.height * scale + margin * 2;
+  const frontViewHeight = size.height * scale + margin * 2 + 20;
   const sideViewWidth = size.length * scale + margin * 2;
-  const sideViewHeight = size.height * scale + margin * 2;
+  const sideViewHeight = size.height * scale + margin * 2 + 20;
 
   // Функция для отрисовки размерной линии
   const renderDimensionLine = (

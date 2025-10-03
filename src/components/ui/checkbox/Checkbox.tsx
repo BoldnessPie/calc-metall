@@ -20,7 +20,7 @@ export default function Checkbox({
         defaultChecked={defaultChecked}
         onChange={onChange}
       />
-      <label htmlFor={legend} className="checkbox__label">
+      <label htmlFor={legend} className="checkbox__legend">
         {legend}
       </label>
     </div>

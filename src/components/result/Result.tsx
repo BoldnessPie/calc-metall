@@ -23,9 +23,14 @@ function Result({ result, onBack }: ResultProps) {
             {result.calculation.pipeH}мм 4шт, L - {result.calculation.pipeW}мм
             4шт, L - 180мм 4шт
           </p>
-          <p>Направляющие: {result.trolleyParams.rails.join("x")}мм</p>
           <p>
-            Колеса: {result.calculation.wheelsType}, D -
+            Направляющие: {result.trolleyParams.rails[0]}x
+            {result.trolleyParams.rails[1] + 20}мм, толщина:{" "}
+            {result.trolleyParams.rails[2] || <b>Уточнить отдельно</b>}
+            {/* захардкодил 20мм, это высота направляющей для общего расчета для резки */}
+          </p>
+          <p>
+            Колеса: {result.calculation.wheelsType}, D-
             {result.calculation.wheelsDiameter}мм 4шт
           </p>
         </div>

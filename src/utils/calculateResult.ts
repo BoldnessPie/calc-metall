@@ -30,36 +30,15 @@ export const calculateResult = (
     case 100:
       wheelsHeight = 130;
       break;
+    case 120:
+      wheelsHeight = 145;
+      break;
     case 125:
       wheelsHeight = 150;
       break;
     case 160:
       wheelsHeight = 190;
       break;
-  }
-
-  let rails: number[] = [];
-
-  // Проверяем, используются ли нестандартные направляющие
-  if (formData.rails && formData.customRailsWidth) {
-    // Используем нестандартную ширину
-    rails = [trayLength + 10, Number(formData.customRailsWidth)];
-  } else {
-    // Используем стандартные значения по типу
-    switch (type) {
-      case "Под противень":
-        rails = [trayLength + 10, 30];
-        break;
-      case "Под гастроемкость":
-        rails = [trayLength + 10, 15];
-        break;
-      case "Под пиццу":
-        rails = [trayLength + 10, 80];
-        break;
-      case "Под поднос":
-        rails = [trayLength + 10, 60];
-        break;
-    }
   }
 
   const calculateDimensions = (isWidthLoading: boolean): CalcResult => {
@@ -71,13 +50,29 @@ export const calculateResult = (
       : trayWidth + addToLength;
     const height = levels * stepLength + 2 * pipe + wheelsHeight + addToHeight;
 
-    const calculation = {
-      pipeH: levels * stepLength + addToHeight,
-      pipeW: width,
-      pipeL: length,
-      wheelsType,
-      wheelsDiameter,
-    };
+    let rails: number[] = [];
+
+    // Проверяем, используются ли нестандартные направляющие
+    if (formData.rails && formData.customRailsWidth) {
+      // Используем нестандартную ширину
+      rails = [length - 10, Number(formData.customRailsWidth)];
+    } else {
+      // Используем стандартные значения по типу
+      switch (type) {
+        case "Под противень":
+          rails = [length - 10, 30, 1.0];
+          break;
+        case "Под гастроемкость":
+          rails = [length - 10, 15, 1.5];
+          break;
+        case "Под пиццу":
+          rails = [length - 10, 80, 1.0];
+          break;
+        case "Под поднос":
+          rails = [length - 10, 50, 1.0];
+          break;
+      }
+    }
 
     return {
       trolleyParams: {
@@ -90,7 +85,13 @@ export const calculateResult = (
         rails,
       },
       size: { width, length, height },
-      calculation,
+      calculation: {
+        pipeH: levels * stepLength + addToHeight,
+        pipeW: width,
+        pipeL: length,
+        wheelsType,
+        wheelsDiameter,
+      },
     };
   };
 

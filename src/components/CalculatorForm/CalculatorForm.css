@@ -25,6 +25,7 @@
 .form-field {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .radio-group {

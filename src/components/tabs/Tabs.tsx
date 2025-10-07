@@ -1,4 +1,8 @@
 import "./Tabs.css";
+import Trolley from "../../assets/images/Telejka.png";
+import Table from "../../assets/images/Stol.png";
+import Shelf from "../../assets/images/Stellaj.png";
+import Sink from "../../assets/images/Moika.png";
 
 function Tabs({ onSelect }: { onSelect: (category: string) => void }) {
   return (
@@ -7,38 +11,22 @@ function Tabs({ onSelect }: { onSelect: (category: string) => void }) {
 
       <div className="tabs__grid">
         <button className="tabs__card" onClick={() => onSelect("carts")}>
-          <img
-            src="src/assets/images/Telejka.png"
-            alt="Тележки"
-            className="tabs__image"
-          />
+          <img src={Trolley} alt="Тележки" className="tabs__image" />
           <span className="tabs__label">Тележки</span>
         </button>
 
         <button className="tabs__card" onClick={() => onSelect("tables")}>
-          <img
-            src="src/assets/images/Stol.png"
-            alt="Столы"
-            className="tabs__image"
-          />
+          <img src={Table} alt="Столы" className="tabs__image" />
           <span className="tabs__label">Столы</span>
         </button>
 
         <button className="tabs__card" onClick={() => onSelect("shelves")}>
-          <img
-            src="src/assets/images/Stellaj.png"
-            alt="Стеллажи"
-            className="tabs__image"
-          />
+          <img src={Shelf} alt="Стеллажи" className="tabs__image" />
           <span className="tabs__label">Стеллажи</span>
         </button>
 
         <button className="tabs__card" onClick={() => onSelect("sinks")}>
-          <img
-            src="src/assets/images/Moika.png"
-            alt="Мойки"
-            className="tabs__image"
-          />
+          <img src={Sink} alt="Мойки" className="tabs__image" />
           <span className="tabs__label">Мойки</span>
         </button>
       </div>

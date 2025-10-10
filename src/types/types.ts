@@ -13,6 +13,7 @@ export interface CalcResult {
     stepLength: number;
     wheelsHeight: number;
     rails: number[];
+    verticalLimiter?: boolean;
   };
   size: {
     width: number;

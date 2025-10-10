@@ -236,6 +236,19 @@ function Tray({ result }: TrayProps) {
           );
         })}
 
+        {/* Вертикальный ограничитель */}
+        {result.trolleyParams.verticalLimiter && (
+          <rect
+            x={startX + cartWidth / 2 - pipeThickness / 2}
+            y={startY + pipeThickness}
+            width={pipeThickness}
+            height={cartHeight - 2 * pipeThickness}
+            fill="#ddd"
+            stroke="#333"
+            strokeWidth="1"
+          />
+        )}
+
         {/* Центральная перемычка */}
         {(() => {
           // Вычисляем средний уровень

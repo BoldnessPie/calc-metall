@@ -45,9 +45,15 @@ export const calculateResult = (
     const width = isWidthLoading
       ? trayWidth + addToWidth + 2 * pipe
       : trayLength + addToWidth + 2 * pipe;
-    const length = isWidthLoading
+    let length = isWidthLoading
       ? trayLength + addToLength
       : trayWidth + addToLength;
+
+    // Добавляем 10мм к длине, если включен вертикальный ограничитель
+    if (formData.verticalLimiter) {
+      length += 10;
+    }
+
     const height = levels * stepLength + 2 * pipe + wheelsHeight + addToHeight;
 
     let rails: number[] = [];
@@ -83,6 +89,7 @@ export const calculateResult = (
         stepLength,
         wheelsHeight,
         rails,
+        verticalLimiter: Boolean(formData.verticalLimiter),
       },
       size: { width, length, height },
       calculation: {

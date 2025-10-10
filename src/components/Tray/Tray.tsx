@@ -207,7 +207,9 @@ function Tray({ result }: TrayProps) {
 
         {/* Уровни для противней */}
         {Array.from({ length: levels }, (_, i) => {
-          const levelY = startY + cartHeight - (i + 1) * (stepLength * scale);
+          // Изменяем логику: начинаем сверху и равномерно распределяем уровни
+          const levelY =
+            startY + pipeThickness + (i + 1) * (stepLength * scale);
           const railWidth = rails[1] * scale; // Ширина направляющих
           const scaledRailThickness = railThickness * scale; // Масштабированная толщина направляющих
           return (
@@ -252,9 +254,9 @@ function Tray({ result }: TrayProps) {
         {/* Центральная перемычка */}
         {(() => {
           // Вычисляем средний уровень
-          const middleLevelIndex = Math.round(levels / 2);
+          const middleLevelIndex = Math.ceil(levels / 2);
           const middleLevelY =
-            startY + cartHeight - middleLevelIndex * (stepLength * scale);
+            startY + pipeThickness + middleLevelIndex * (stepLength * scale);
           const bracingThickness = 8 * scale; // Толщина перемычки 8мм
           const bracingOffset = 2 * scale; // Отступ 2мм от направляющей
           const bracingY =
@@ -283,7 +285,7 @@ function Tray({ result }: TrayProps) {
             height={wheelHeight}
             fill="#ccc"
             stroke="#333"
-            strokeWidth="2"
+            strokeWidth="1"
           />
           {/* Правое колесо */}
           <rect
@@ -293,7 +295,7 @@ function Tray({ result }: TrayProps) {
             height={wheelHeight}
             fill="#ccc"
             stroke="#333"
-            strokeWidth="2"
+            strokeWidth="1"
           />
         </g>
 
@@ -324,7 +326,8 @@ function Tray({ result }: TrayProps) {
 
         {/* Размерная стрелка для ширины направляющей */}
         {(() => {
-          const bottomLevelY = startY + cartHeight - stepLength * scale;
+          const bottomLevelY =
+            startY + pipeThickness + stepLength * levels * scale;
           const railWidth = rails[1] * scale;
           const railStartX = startX + pipeThickness;
           const railEndX = railStartX + railWidth;
@@ -458,7 +461,9 @@ function Tray({ result }: TrayProps) {
 
         {/* Направляющие для противней */}
         {Array.from({ length: levels }, (_, i) => {
-          const levelY = startY + cartHeight - (i + 1) * (stepLength * scale);
+          // Изменяем логику: начинаем сверху и равномерно распределяем уровни
+          const levelY =
+            startY + pipeThickness + (i + 1) * (stepLength * scale);
           return (
             <g key={i}>
               {/* Горизонтальные направляющие */}
@@ -567,8 +572,10 @@ function Tray({ result }: TrayProps) {
         {/* Размер между уровнями */}
         {levels > 1 &&
           (() => {
-            const level1Y = startY + cartHeight - stepLength * scale;
-            const level2Y = startY + cartHeight - 2 * stepLength * scale;
+            const level1Y =
+              startY + pipeThickness + stepLength * levels * scale;
+            const level2Y =
+              startY + pipeThickness + stepLength * (levels - 1) * scale;
             return renderDimensionLine(
               startX - 20,
               level1Y,

@@ -1,4 +1,4 @@
-import Container from "../container/Container";
+import Container from "../Container/Container";
 import "./Header.css";
 
 function Header() {

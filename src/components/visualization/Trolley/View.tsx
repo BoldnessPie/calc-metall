@@ -1,5 +1,5 @@
-import "./Tray.css";
-import type { CalcResult } from "../../types/types";
+import "./View.css";
+import type { CalcResult } from "../../../types/Trolley/calculatorTypes";
 
 interface TrayProps {
   result: CalcResult;

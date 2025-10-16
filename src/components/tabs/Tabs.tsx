@@ -10,7 +10,7 @@ function Tabs({ onSelect }: { onSelect: (category: string) => void }) {
       <h3 className="tabs__title">Выберите категорию для расчета</h3>
 
       <div className="tabs__grid">
-        <button className="tabs__card" onClick={() => onSelect("carts")}>
+        <button className="tabs__card" onClick={() => onSelect("trolleys")}>
           <img src={Trolley} alt="Тележки" className="tabs__image" />
           <span className="tabs__label">Тележки</span>
         </button>

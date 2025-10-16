@@ -1,4 +1,4 @@
-import type { CalcResult } from "../types/types";
+import type { CalcResult } from "../../types/Trolley/calculatorTypes";
 
 export const calculateResult = (
   formData: Record<string, string | number | boolean>

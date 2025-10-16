@@ -1,9 +1,3 @@
-// Общие типы для CalculatorForm и связанных компонентов
-
-export type FormData = Record<string, string | number | boolean>;
-
-export type Errors = Record<string, string>;
-
 export interface CalcResult {
   trolleyParams: {
     trayWidth: number;
@@ -27,11 +21,6 @@ export interface CalcResult {
     wheelsType: string;
     wheelsDiameter: number;
   };
-}
-
-export interface CalculatorFormProps {
-  category: string;
-  onBack: () => void;
 }
 
 export interface ResultProps {

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import type { Errors } from "../types/types";
-import type { Field } from "../components/CalculatorForm/formTypes";
+import type { Errors, Field } from "../types/generalTypes";
 
 export const useFormValidation = (fields: Field[]) => {
   const [errors, setErrors] = useState<Errors>({});

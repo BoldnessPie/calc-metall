@@ -45,11 +45,6 @@ export const table: Field[] = [
     type: "number",
   },
   {
-    name: "stepLength",
-    label: "Расстояние между полками",
-    type: "number",
-  },
-  {
     name: "heightFromFloor",
     label: "Высота полки от пола",
     type: "number",

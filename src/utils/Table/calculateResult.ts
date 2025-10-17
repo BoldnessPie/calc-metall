@@ -1,5 +1,4 @@
 import type { CalcResult } from "../../types/Table/calculatorTypes";
-import { table } from "../../types/Table/tableTypes";
 
 export const calculateResult = (
   formData: Record<string, string | number | boolean>
@@ -20,13 +19,12 @@ export const calculateResult = (
   const reinforcementPlywood = Boolean(formData.reinforcement);
   const shelf = Boolean(formData.shelf);
   const shelfLevels = Number(formData.shelfLevels);
-  let stepLength = Number(formData.stepLength);
   const heightFromFloor = Number(formData.heightFromFloor) || floorH;
 
   let pipeH, pipeTopW, pipeTopL, pipeBottomW, pipeBottomL;
 
   if (reinforcementPlywood) {
-    pipeH = tableHeight - adjustableLengsH - tableTopH - pipeSize;
+    pipeH = tableHeight - adjustableLengsH - tableTopH;
     pipeTopW = tableWidth - subtrackW * 2 - pipeSize * 2;
     pipeTopL = tableLength - subtrackLen * 2 - pipeSize * 2;
     (pipeBottomW = pipeTopW), (pipeBottomL = pipeTopL);
@@ -45,8 +43,8 @@ export const calculateResult = (
     asideSheets = [tableWidth, tableTopSteelH];
   } else {
     tableSheet = [
-      tableLength + steelTickness + tableTopSteelH * 2,
-      tableWidth + steelTickness + tableTopSteelH * 2,
+      tableLength + steelTickness * 2 + pipeSize * 2,
+      tableWidth + steelTickness * 2 + pipeSize * 2,
     ];
     asideSheets = null;
   }
@@ -59,17 +57,12 @@ export const calculateResult = (
       tableWidth - subtrackW * 2 + pipeSize * 2,
     ];
   } else if (shelf) {
-    shelfSheet = null;
+    shelfSheet = [
+      tableLength + steelTickness * 2 + pipeSize * 2,
+      tableWidth + steelTickness * 2 + pipeSize * 2,
+    ];
   } else {
     shelfSheet = null;
-  }
-
-  if (shelfLevels > 1 && !stepLength) {
-    stepLength =
-      tableHeight -
-      tableTopSteelH -
-      heightFromFloor -
-      (pipeSize * (shelfLevels - 1)) / shelfLevels;
   }
 
   return {
@@ -80,7 +73,6 @@ export const calculateResult = (
       pipe: pipeSize,
       shelf,
       shelfLevels,
-      stepLength,
       heightFromFloor,
     },
     calculation: {
@@ -93,9 +85,13 @@ export const calculateResult = (
         },
       },
       sheets: {
-        top: `${tableSheet[0]}x${tableSheet[1]}мм 1шт`,
-        aside: asideSheets ? `${asideSheets[0]}x${asideSheets[1]}мм 2шт` : null,
-        shelf: shelfSheet ? `${shelfSheet[0]}x${shelfSheet[1]}мм 1шт` : null,
+        tableTop: `${tableSheet[0]}x${tableSheet[1]}мм 1шт`,
+        tableAside: asideSheets
+          ? `${asideSheets[0]}x${asideSheets[1]}мм 2шт`
+          : null,
+        tableShelf: shelfSheet
+          ? `${shelfSheet[0]}x${shelfSheet[1]}мм 1шт`
+          : null,
       },
     },
   };

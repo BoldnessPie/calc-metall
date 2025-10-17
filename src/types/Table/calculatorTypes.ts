@@ -6,7 +6,6 @@ export interface CalcResult {
     pipe: number;
     shelf: boolean;
     shelfLevels: number;
-    stepLength: number;
     heightFromFloor: number;
   };
   calculation: {
@@ -16,9 +15,9 @@ export interface CalcResult {
       bottom: { width: string; length: string };
     };
     sheets: {
-      top: string;
-      aside: string | null;
-      shelf: string | null;
+      tableTop: string;
+      tableAside: string | null;
+      tableShelf: string | null;
     };
   };
 }

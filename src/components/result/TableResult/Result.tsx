@@ -13,17 +13,27 @@ function Result({ result, onBack }: ResultProps) {
       <div className="result__container">
         <h2 className="result__title">Результаты расчета</h2>
         <div className="result__wrap">
-          <p>
-            Трубы: L- {result.calculation.pipe.height}, L-{" "}
-            {result.calculation.pipe.top.width}, L-{" "}
-            {result.calculation.pipe.top.length}, L-{" "}
-            {result.calculation.pipe.bottom.width}, L-{" "}
-            {result.calculation.pipe.bottom.length}
-          </p>
-          <p>
-            Лист: {result.calculation.sheets.top},{" "}
-            {result.calculation.sheets.aside}, {result.calculation.sheets.shelf}
-          </p>
+          <ul>
+            <h4>Труба:</h4>
+            <li>Высота: {result.calculation.pipe.height}</li>
+            <li>Ширина (верхняя часть): {result.calculation.pipe.top.width}</li>
+            <li>Длина (верхняя часть): {result.calculation.pipe.top.length}</li>
+            <li>
+              Ширина (нижняя часть): {result.calculation.pipe.bottom.width}
+            </li>
+            <li>
+              Длина (нижняя часть): {result.calculation.pipe.bottom.length}
+            </li>
+          </ul>
+
+          <ul>
+            <h4>Лист:</h4>
+            <li>{result.calculation.sheets.tableTop}</li>
+            <li>{result.calculation.sheets.tableAside}</li>
+            {result.calculation.sheets.tableShelf && (
+              <li>{result.calculation.sheets.tableShelf}</li>
+            )}
+          </ul>
         </div>
       </div>
     </div>

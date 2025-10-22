@@ -16,7 +16,7 @@ function Table({ onBack }: { onBack: () => void }) {
   const fields = table; // Получаем конфигурацию полей для столов
   const [formData, setFormData] = useState<
     Record<string, string | number | boolean>
-  >({});
+  >({ reinforcement: true }); // Инициализируем состояние формы с начальными значениями
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [result, setResult] = useState<CalcResult | null>(null);
@@ -35,6 +35,11 @@ function Table({ onBack }: { onBack: () => void }) {
         delete newData.shelfLevels;
         delete newData.stepLength;
         delete newData.heightFromFloor;
+      }
+
+      // Если устанавливаем checkbox "shelf", задаем shelfLevels в 1 по умолчанию
+      if (name === "shelf" && value) {
+        newData.shelfLevels = 1;
       }
 
       return newData;

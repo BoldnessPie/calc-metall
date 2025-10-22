@@ -1,0 +1,96 @@
+.table {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.table h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 18px;
+  text-align: center;
+}
+
+.table__drawings {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.table__drawing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.drawing {
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dimension-line text {
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  fill: #333;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-weight: 600;
+}
+
+.dimension-line line {
+  stroke: #666;
+  stroke-width: 1;
+}
+
+.dimension-line polygon {
+  fill: #666;
+}
+
+.table__specifications {
+  background-color: white;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.table__specifications h4 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.table__specifications ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.table__specifications li {
+  padding: 5px 0;
+  border-bottom: 1px solid #f0f0f0;
+  color: #555;
+}
+
+.table__specifications li:last-child {
+  border-bottom: none;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .table__drawings {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .drawing {
+    max-width: 100%;
+    height: auto;
+  }
+}

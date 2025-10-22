@@ -12,6 +12,8 @@ export const calculateResult = (
   const tableTopH = plywoodTickness + steelTickness + 2; // Высота самой столешницы, без трубы. 2мм - это погрешность с учетом клея
   const adjustableLengsH = 15; // Высота регулируемых ножек.
 
+  const tableMaterial = formData.materialTableType?.toString() || "AISI 430";
+  const pipeMaterial = formData.materialPipeType?.toString() || "AISI 430";
   const tableWidth = Number(formData.width);
   const tableLength = Number(formData.length);
   const tableHeight = Number(formData.height);
@@ -65,12 +67,30 @@ export const calculateResult = (
     shelfSheet = null;
   }
 
+  let stepLevels;
+  if (shelfLevels > 1) {
+    stepLevels = Math.trunc(
+      (tableHeight -
+        tableTopSteelH -
+        heightFromFloor -
+        pipeSize * (shelfLevels - 1)) /
+        shelfLevels
+    );
+  } else if (shelfLevels === 1) {
+    stepLevels = tableHeight - tableTopSteelH - heightFromFloor;
+  } else {
+    stepLevels = null;
+  }
+
   return {
     tableSpecification: {
+      steelSheet: [tableMaterial, steelTickness],
+      plywoodTickness,
+      adjustableLengsH,
       width: tableWidth,
       length: tableLength,
       height: tableHeight,
-      pipe: pipeSize,
+      pipe: [pipeMaterial, pipeSize],
       shelf,
       shelfLevels,
       heightFromFloor,
@@ -84,13 +104,14 @@ export const calculateResult = (
           length: `${pipeBottomL}мм 2шт`,
         },
       },
+      step: stepLevels ? `${stepLevels}мм` : null,
       sheets: {
         tableTop: `${tableSheet[0]}x${tableSheet[1]}мм 1шт`,
         tableAside: asideSheets
           ? `${asideSheets[0]}x${asideSheets[1]}мм 2шт`
           : null,
         tableShelf: shelfSheet
-          ? `${shelfSheet[0]}x${shelfSheet[1]}мм 1шт`
+          ? `${shelfSheet[0]}x${shelfSheet[1]}мм ${shelfLevels}шт`
           : null,
       },
     },

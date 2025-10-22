@@ -1,6 +1,7 @@
 import type { ResultProps } from "../../../types/Table/calculatorTypes";
 import "../Result.css";
 import Button from "../../ui/button/Button";
+import TableView from "../../visualization/Table/View";
 
 function Result({ result, onBack }: ResultProps) {
   return (
@@ -10,8 +11,12 @@ function Result({ result, onBack }: ResultProps) {
         value="← Назад к форме"
         onClick={onBack}
       />
+      {/* Визуализация стола */}
+      <TableView result={result} />
+
       <div className="result__container">
         <h2 className="result__title">Результаты расчета</h2>
+
         <div className="result__wrap">
           <ul>
             <h4>Труба:</h4>
@@ -24,6 +29,7 @@ function Result({ result, onBack }: ResultProps) {
             <li>
               Длина (нижняя часть): {result.calculation.pipe.bottom.length}
             </li>
+            <li>Шаг: {result.calculation.step}</li>
           </ul>
 
           <ul>

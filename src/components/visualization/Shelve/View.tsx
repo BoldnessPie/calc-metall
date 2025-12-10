@@ -20,9 +20,6 @@ function Shelve({ result }: ShelveProps) {
   // Верхняя горизонтальная труба = первая полка (центр на startY + pipeThickness/2)
   // Нижняя полка должна быть на высоте heightFromFloor от пола
   // Расстояние от центра верхней полки до центра нижней полки:
-  const pipeThicknessValue = Number(pipe[1]);
-  const availableHeight =
-    height - adjustableLengsH - heightFromFloor - pipeThicknessValue / 2;
   // Расстояние между полками (от верхней до нижней равномерно)
   const actualStep = parseInt(step);
 

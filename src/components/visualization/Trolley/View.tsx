@@ -210,7 +210,7 @@ function Tray({ result }: TrayProps) {
           // Изменяем логику: начинаем сверху и равномерно распределяем уровни
           const levelY =
             startY + pipeThickness + (i + 1) * (stepLength * scale);
-          const railWidth = rails[1] * scale; // Ширина направляющих
+          const railWidth = Number(rails[1]) * scale; // Ширина направляющих
           const scaledRailThickness = railThickness * scale; // Масштабированная толщина направляющих
           return (
             <g key={i}>
@@ -328,7 +328,7 @@ function Tray({ result }: TrayProps) {
         {(() => {
           const bottomLevelY =
             startY + pipeThickness + stepLength * levels * scale;
-          const railWidth = rails[1] * scale;
+          const railWidth = Number(rails[1]) * scale;
           const railStartX = startX + pipeThickness;
           const railEndX = railStartX + railWidth;
 

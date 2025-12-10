@@ -1,4 +1,4 @@
-.tray {
+.shelve {
   margin: 20px 0;
   padding: 20px;
   border: 1px solid #ddd;
@@ -6,22 +6,22 @@
   background-color: #f9f9f9;
 }
 
-.tray h3 {
+.shelve h3 {
   margin: 0 0 20px 0;
   color: #333;
   font-size: 18px;
   text-align: center;
 }
 
-.tray__drawings {
+.shelve__drawings {
   display: flex;
   gap: 30px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
-.tray__drawing {
+.shelve__drawing {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,37 +52,38 @@
   fill: #666;
 }
 
-.tray__specifications {
+.shelve__specifications {
+  background-color: white;
   padding: 15px;
   border-radius: 6px;
   border: 1px solid #e0e0e0;
 }
 
-.tray__specifications h4 {
+.shelve__specifications h4 {
   margin: 0 0 10px 0;
   color: #333;
   font-size: 16px;
 }
 
-.tray__specifications ul {
+.shelve__specifications ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.tray__specifications li {
+.shelve__specifications li {
   padding: 5px 0;
   border-bottom: 1px solid #f0f0f0;
   color: #555;
 }
 
-.tray__specifications li:last-child {
+.shelve__specifications li:last-child {
   border-bottom: none;
 }
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
-  .tray__drawings {
+  .shelve__drawings {
     flex-direction: column;
     align-items: center;
     gap: 20px;

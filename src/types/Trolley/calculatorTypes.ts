@@ -6,7 +6,7 @@ export interface CalcResult {
     levels: number;
     stepLength: number;
     wheelsHeight: number;
-    rails: number[];
+    rails: Array<number | string>;
     verticalLimiter?: boolean;
   };
   size: {
@@ -15,6 +15,7 @@ export interface CalcResult {
     height: number;
   };
   calculation: {
+    pipeType: string;
     pipeH: number;
     pipeW: number;
     pipeL: number;

@@ -281,7 +281,7 @@ function Tray({ result }: TrayProps) {
           <rect
             x={startX + 15}
             y={startY + cartHeight}
-            width={15}
+            width={10}
             height={wheelHeight}
             fill="#ccc"
             stroke="#333"
@@ -289,9 +289,9 @@ function Tray({ result }: TrayProps) {
           />
           {/* Правое колесо */}
           <rect
-            x={startX + cartWidth - 30}
+            x={startX + cartWidth - 25}
             y={startY + cartHeight}
-            width={15}
+            width={10}
             height={wheelHeight}
             fill="#ccc"
             stroke="#333"
@@ -618,6 +618,7 @@ function Tray({ result }: TrayProps) {
           <li>
             Под противень: {trayWidth}×{trayLength}мм
           </li>
+          <li>Ширина направляющих: {result.trolleyParams.rails[1]}мм</li>
           <li>Уровней: {levels}</li>
           <li>Расстояние между уровнями: {stepLength}мм</li>
           <li>

@@ -30,10 +30,31 @@ export const trolley: Field[] = [
     max: 1000,
   },
   {
+    name: "materialTypePipe",
+    label: "Вид стали трубы",
+    type: "select",
+    options: ["AISI 201", "AISI 304", "AISI 430"],
+    defaultValue: "AISI 201",
+  },
+  {
     name: "pipe",
     label: "Размер трубы",
     type: "select",
     options: ["20х20мм", "25х25мм"],
+  },
+  {
+    name: "materialTypeSteel",
+    label: "Вид стали направляющих",
+    type: "select",
+    options: ["AISI 201", "AISI 304", "AISI 430"],
+    defaultValue: "AISI 430",
+  },
+  {
+    name: "steelThickness",
+    label: "Толщина направляющих",
+    type: "select",
+    options: ["1.0", "1.2", "1.5", "2.0"],
+    defaultValue: "1.0",
   },
   {
     name: "levels",
@@ -60,6 +81,13 @@ export const trolley: Field[] = [
     label: "Диаметр колес",
     type: "select",
     options: ["50", "75", "80", "100", "120", "125", "160"],
+  },
+  {
+    name: "addToHeight",
+    label: "Высота до первой направляющей",
+    type: "number",
+    min: 0,
+    max: 1000,
   },
   {
     name: "rails",

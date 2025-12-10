@@ -9,6 +9,7 @@ export interface Field {
   options?: string[];
   min?: number;
   max?: number;
+  defaultValue?: string | number | boolean;
 }
 
 export type FormData = Record<string, string | number | boolean>;

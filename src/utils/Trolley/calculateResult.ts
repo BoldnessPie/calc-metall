@@ -5,16 +5,19 @@ export const calculateResult = (
 ): CalcResult | null => {
   const addToWidth = 10;
   const addToLength = 20;
-  const addToHeight = 30;
 
   const trayWidth = Number(formData.width);
   const trayLength = Number(formData.length);
   const type = String(formData.type);
   const pipe = parseInt(String(formData.pipe));
+  const pipeSteelType = String(formData.materialTypePipe);
+  const railsSteelType = String(formData.materialTypeSteel);
+  const railsThickness = parseFloat(String(formData.steelThickness));
   const levels = Number(formData.levels);
   const stepLength = Number(formData.distance);
   const wheelsType = String(formData.wheels);
   const wheelsDiameter = Number(formData.wheelsDiameter);
+  const addToHeight = Number(formData.addToHeight) || 30;
 
   let wheelsHeight: number;
   switch (wheelsDiameter) {
@@ -56,7 +59,7 @@ export const calculateResult = (
 
     const height = levels * stepLength + 2 * pipe + wheelsHeight + addToHeight;
 
-    let rails: number[] = [];
+    let rails: Array<number | string> = [];
 
     // Проверяем, используются ли нестандартные направляющие
     if (formData.rails && formData.customRailsWidth) {
@@ -66,19 +69,21 @@ export const calculateResult = (
       // Используем стандартные значения по типу
       switch (type) {
         case "Под противень":
-          rails = [length - 10, 30, 1.0];
+          rails = [length - 10, 30];
           break;
         case "Под гастроемкость":
-          rails = [length - 10, 15, 1.5];
+          rails = [length - 10, 15];
           break;
         case "Под пиццу":
-          rails = [length - 10, 80, 1.0];
+          rails = [length - 10, 80];
           break;
         case "Под поднос":
-          rails = [length - 10, 50, 1.0];
+          rails = [length - 10, 50];
           break;
       }
     }
+
+    rails.push(railsThickness, railsSteelType);
 
     return {
       trolleyParams: {
@@ -93,6 +98,7 @@ export const calculateResult = (
       },
       size: { width, length, height },
       calculation: {
+        pipeType: pipeSteelType,
         pipeH: levels * stepLength + addToHeight,
         pipeW: width,
         pipeL: length,
@@ -101,7 +107,7 @@ export const calculateResult = (
       },
     };
   };
-
+  console.log(pipeSteelType);
   switch (formData.loadingSide) {
     case "По ширине":
       return calculateDimensions(true);

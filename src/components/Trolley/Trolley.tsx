@@ -3,7 +3,7 @@ import { useState } from "react";
 import { trolley } from "../../types/Trolley/trolleyTypes";
 import type { CalcResult } from "../../types/Trolley/calculatorTypes";
 import { useFormValidation } from "../../hooks/useFormValidation";
-import { calculateResult as calcResultUtil } from "../../utils/Trolley/calculateResult";
+import { buildResult as calcResultUtil } from "../../utils/Trolley/buildResult";
 
 import Button from "../ui/button/Button";
 import Input from "../ui/input/Input";
@@ -53,7 +53,7 @@ function Trolley({ onBack }: { onBack: () => void }) {
   };
 
   // Функция для выполнения расчета на основе введенных данных
-  const calculateResult = () => {
+  const buildResult = () => {
     return calcResultUtil(formData);
   };
 
@@ -66,7 +66,7 @@ function Trolley({ onBack }: { onBack: () => void }) {
       return;
     }
 
-    const calcResult = calculateResult(); // Выполняем расчет
+    const calcResult = buildResult(); // Выполняем расчет
     setResult(calcResult); // Сохраняем результат в состояние
     setIsSubmitted(true); // Переключаемся на отображение результата
   };
@@ -96,7 +96,7 @@ function Trolley({ onBack }: { onBack: () => void }) {
         <div className="form-fields">
           {fields.map((field) => {
             // Скрываем поле customRailsWidth, если checkbox rails не отмечен
-            if (field.name === "customRailsWidth" && !formData["rails"]) {
+            if (field.name === "customRailsWidth" && !formData["customRails"]) {
               return null;
             }
 

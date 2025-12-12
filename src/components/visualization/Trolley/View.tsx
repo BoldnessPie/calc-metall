@@ -210,7 +210,7 @@ function Tray({ result }: TrayProps) {
           // Изменяем логику: начинаем сверху и равномерно распределяем уровни
           const levelY =
             startY + pipeThickness + (i + 1) * (stepLength * scale);
-          const railWidth = Number(rails[1]) * scale; // Ширина направляющих
+          const railWidth = Number(rails.width) * scale; // Ширина направляющих
           const scaledRailThickness = railThickness * scale; // Масштабированная толщина направляющих
           return (
             <g key={i}>
@@ -328,7 +328,7 @@ function Tray({ result }: TrayProps) {
         {(() => {
           const bottomLevelY =
             startY + pipeThickness + stepLength * levels * scale;
-          const railWidth = Number(rails[1]) * scale;
+          const railWidth = Number(rails.width) * scale;
           const railStartX = startX + pipeThickness;
           const railEndX = railStartX + railWidth;
 
@@ -366,7 +366,7 @@ function Tray({ result }: TrayProps) {
                 fontSize="12"
                 fill="#333"
               >
-                Ширина {rails[1]}мм
+                Ширина {rails.width}мм
               </text>
             </g>
           );
@@ -618,14 +618,14 @@ function Tray({ result }: TrayProps) {
           <li>
             Под противень: {trayWidth}×{trayLength}мм
           </li>
-          <li>Ширина направляющих: {result.trolleyParams.rails[1]}мм</li>
+          <li>Ширина направляющих: {result.trolleyParams.rails.width}мм</li>
           <li>Уровней: {levels}</li>
           <li>Расстояние между уровнями: {stepLength}мм</li>
           <li>
             Размкер трубы: {pipe}×{pipe}мм
           </li>
-          <li>Тип колес: {result.calculation.wheelsType}</li>
-          <li>Диаметр колес: {result.calculation.wheelsDiameter}мм</li>
+          <li>Тип колес: {result.calculations.wheelsType}</li>
+          <li>Диаметр колес: {result.calculations.wheelsDiameter}мм</li>
         </ul>
       </div>
     </div>

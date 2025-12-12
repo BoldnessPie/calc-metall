@@ -9,12 +9,12 @@ export const trolley: Field[] = [
     options: ["Под противень", "Под гастроемкость", "Под пиццу", "Под поднос"],
   },
 
-  {
-    name: "loadingSide",
-    label: "По какой стороне загрузка",
-    type: "select",
-    options: ["По ширине", "По длине"],
-  },
+  // {
+  //   name: "loadingSide",
+  //   label: "По какой стороне загрузка",
+  //   type: "select",
+  //   options: ["По ширине", "По длине"],
+  // },
   {
     name: "width",
     label: "Ширина емкости",
@@ -84,13 +84,18 @@ export const trolley: Field[] = [
   },
   {
     name: "addToHeight",
-    label: "Высота до первой направляющей",
+    label: "Высота до направляющих",
     type: "number",
     min: 0,
-    max: 1000,
+    max: 100,
   },
   {
-    name: "rails",
+    name: "verticalLimiter",
+    label: "Вертикальный ограничитель",
+    type: "boolean",
+  },
+  {
+    name: "customRails",
     label: "Нестандартные направляющие?",
     type: "boolean",
   },
@@ -100,10 +105,5 @@ export const trolley: Field[] = [
     type: "number",
     min: 10,
     max: 200,
-  },
-  {
-    name: "verticalLimiter",
-    label: "Вертикальный ограничитель",
-    type: "boolean",
   },
 ];

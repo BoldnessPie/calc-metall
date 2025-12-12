@@ -96,17 +96,17 @@ function Result({ result, onBack }: ResultProps) {
               {/* Труба по длине */}
               <div className="trolley-result__item">
                 <div className="trolley-result__item-visual">
-                  <PipeWithBevels length={result.calculation.pipeL} />
+                  <PipeWithBevels length={result.calculations.pipeL} />
                 </div>
                 <div className="trolley-result__item-info">
                   <div className="trolley-result__item-label">
                     По длине (скосы 45°)
                   </div>
                   <div className="trolley-result__item-value">
-                    {result.calculation.pipeType}
+                    {result.calculations.pipeType}
                   </div>
                   <div className="trolley-result__item-value">
-                    L = {result.calculation.pipeL}мм
+                    L = {result.calculations.pipeL}мм
                   </div>
                   <div className="trolley-result__item-count">4 шт</div>
                 </div>
@@ -115,17 +115,17 @@ function Result({ result, onBack }: ResultProps) {
               {/* Труба по ширине */}
               <div className="trolley-result__item">
                 <div className="trolley-result__item-visual">
-                  <PipeWithBevels length={result.calculation.pipeW} />
+                  <PipeWithBevels length={result.calculations.pipeW} />
                 </div>
                 <div className="trolley-result__item-info">
                   <div className="trolley-result__item-label">
                     По ширине (скосы 45°)
                   </div>
                   <div className="trolley-result__item-value">
-                    {result.calculation.pipeType}
+                    {result.calculations.pipeType}
                   </div>
                   <div className="trolley-result__item-value">
-                    L = {result.calculation.pipeW}мм
+                    L = {result.calculations.pipeW}мм
                   </div>
                   <div className="trolley-result__item-count">4 шт</div>
                 </div>
@@ -134,17 +134,17 @@ function Result({ result, onBack }: ResultProps) {
               {/* Вертикальная труба */}
               <div className="trolley-result__item">
                 <div className="trolley-result__item-visual">
-                  <StraightPipe length={result.calculation.pipeH} />
+                  <StraightPipe length={result.calculations.pipeH} />
                 </div>
                 <div className="trolley-result__item-info">
                   <div className="trolley-result__item-label">
                     Вертикальная (прямая)
                   </div>
                   <div className="trolley-result__item-value">
-                    {result.calculation.pipeType}
+                    {result.calculations.pipeType}
                   </div>
                   <div className="trolley-result__item-value">
-                    L = {result.calculation.pipeH}мм
+                    L = {result.calculations.pipeH}мм
                   </div>
                   <div className="trolley-result__item-count">4 шт</div>
                 </div>
@@ -160,7 +160,7 @@ function Result({ result, onBack }: ResultProps) {
                     Перемычка (скосы 45°)
                   </div>
                   <div className="trolley-result__item-value">
-                    {result.calculation.pipeType}
+                    {result.calculations.pipeType}
                   </div>
                   <div className="trolley-result__item-value">L = 200мм</div>
                   <div className="trolley-result__item-count">4 шт</div>
@@ -181,14 +181,15 @@ function Result({ result, onBack }: ResultProps) {
                 <div className="trolley-result__item-info">
                   <div className="trolley-result__item-label">Направляющие</div>
                   <div className="trolley-result__item-value">
-                    {result.trolleyParams.rails[3]}
+                    {result.trolleyParams.rails.type}
                   </div>
                   <div className="trolley-result__item-value">
-                    {result.trolleyParams.rails[0]}×
-                    {Number(result.trolleyParams.rails[1]) + 20}мм
+                    {result.trolleyParams.rails.length}×
+                    {Number(result.trolleyParams.rails.width) + 20}мм
                   </div>
                   <div className="trolley-result__item-value">
-                    Толщина: {Number(result.trolleyParams.rails[2]).toFixed(1)}
+                    Толщина:{" "}
+                    {Number(result.trolleyParams.rails.thickness).toFixed(1)}
                     мм
                   </div>
                   <div className="trolley-result__item-count">
@@ -200,15 +201,15 @@ function Result({ result, onBack }: ResultProps) {
               {/* Колеса */}
               <div className="trolley-result__item">
                 <div className="trolley-result__item-visual">
-                  <WheelVisual diameter={result.calculation.wheelsDiameter} />
+                  <WheelVisual diameter={result.calculations.wheelsDiameter} />
                 </div>
                 <div className="trolley-result__item-info">
                   <div className="trolley-result__item-label">Колеса</div>
                   <div className="trolley-result__item-value">
-                    {result.calculation.wheelsType}
+                    {result.calculations.wheelsType}
                   </div>
                   <div className="trolley-result__item-value">
-                    D = {result.calculation.wheelsDiameter}мм
+                    D = {result.calculations.wheelsDiameter}мм
                   </div>
                   <div className="trolley-result__item-count">4 шт</div>
                 </div>

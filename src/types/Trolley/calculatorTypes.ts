@@ -6,7 +6,7 @@ export interface CalcResult {
     levels: number;
     stepLength: number;
     wheelsHeight: number;
-    rails: Array<number | string>;
+    rails: Record<string, number | string>;
     verticalLimiter?: boolean;
   };
   size: {
@@ -14,7 +14,7 @@ export interface CalcResult {
     length: number;
     height: number;
   };
-  calculation: {
+  calculations: {
     pipeType: string;
     pipeH: number;
     pipeW: number;
@@ -27,4 +27,22 @@ export interface CalcResult {
 export interface ResultProps {
   result: CalcResult;
   onBack: () => void;
+}
+
+export interface ParsedResult {
+  type: string;
+  trayWidth: number;
+  trayLength: number;
+  pipeType: string;
+  pipe: number;
+  railsType: string;
+  railsThickness: number;
+  levels: number;
+  step: number;
+  wheelsType: string;
+  wheels: number;
+  additionalH: number;
+  customRails: boolean;
+  customRailsWidth: number;
+  verticalLimiter: boolean;
 }
